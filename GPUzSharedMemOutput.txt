@@ -1,0 +1,193 @@
+[0]GPU Clock: 809.604 MHz
+[1]Memory Clock: 1749.591 MHz
+[2]GPU Temperature: 42 °C
+[3]Fan Speed (%): 26 %%
+[4]Fan Speed (RPM): 1112 RPM
+[5]Memory Used: 308.63671875 MB
+[6]GPU Load: 0 %%
+[7]Memory Controller Load: 1 %%
+[8]Video Engine Load: 0 %%
+[9]Bus Interface Load: 0 %%
+[10]Power Consumption (W): 76.855 W
+[11]Power Consumption (%): 30.742 %% TDP
+[12]PerfCap Reason: 16
+[13]VDDC: 0.95 V
+[14]CPU Temperature: 47 °C
+[15]System Memory Used: 4425.5703125 MB
+
+[0]BIOSUEFI: 1
+[1]BIOSVersion: 80.80.34.00.80
+[2]Bus: 1
+[3]BusInterface: PCIe x16 3.0 @ x16 3.0
+[4]CUDA: 1
+[5]CUDA_Capability: 3.5
+[6]CardName: NVIDIA GeForce GTX 780 Ti
+[7]ClockGPU: 980
+[8]ClockGPUBase: 980
+[9]ClockGPUBaseDefault: 980
+[10]ClockGPUBoost: 1046
+[11]ClockGPUBoostDefault: 1046
+[12]ClockGPUDefault: 980
+[13]ClockMem: 1750
+[14]ClockMemDefault: 1750
+[15]ClockShader:
+[16]ClockShaderDefault:
+[17]DXCompute: 1
+[18]DXCompute_Capability: 5.0
+[19]DXR: 0
+[20]Dev: 0
+[21]DeviceID: 100A
+[22]DieSize: 561
+[23]DirectML: 1
+[24]DirectXSupport: 12 (11_0)
+[25]DriverDate: Jan 29, 2020
+[26]DriverVersion: 26.21.14.4219 (NVIDIA 442.19) DCH / Win10 64
+[27]FillratePixel: 50.2
+[28]FillrateTexel: 251.0
+[29]Fn: 0
+[30]GPUName: GK110
+[31]GPURevision: B1
+[32]HasBoostClocks: 1
+[33]MemBandwidth: 336.0
+[34]MemBusWidth: 384
+[35]MemSize: 3072
+[36]MemSizeForDisplay: 3072 MB
+[37]MemType: GDDR5
+[38]MemVendor: Hynix
+[39]Monitor 1\AspectRatio: 17:9
+[40]Monitor 1\DPMSSupport: Standby
+[41]Monitor 1\DisplayDiagonal: 34.1"
+[42]Monitor 1\DisplayHeight: 33
+[43]Monitor 1\DisplayWidth: 80
+[44]Monitor 1\Gamma: 2.20
+[45]Monitor 1\HRefreshMax: 225
+[46]Monitor 1\HRefreshMin: 30
+[47]Monitor 1\Manufactured: Week 11 / 2019
+[48]Monitor 1\MaxResX: 3440
+[49]Monitor 1\MaxResY: 1440
+[50]Monitor 1\Model:  34GK950F  (GSM7727)
+[51]Monitor 1\Serial: 275999
+[52]Monitor 1\Type: DisplayPort
+[53]Monitor 1\VRefreshMax: 144
+[54]Monitor 1\VRefreshMin: 60
+[55]MonitorCount: 1
+[56]MultiGPU0: Disabled
+[57]MultiGPUName: NVIDIA SLI
+[58]NumROPs: 48
+[59]NumShadersPixel:
+[60]NumShadersUnified: 2880
+[61]NumShadersVertex:
+[62]NumTMUs: 240
+[63]OpenCL: 1
+[64]OpenCL_Profile: Full
+[65]OpenCL_Version: OpenCL 1.2 CUDA
+[66]OpenGL: 1
+[67]OpenGL_Version: 4.6
+[68]PhysX: 1
+[69]ProcessSize: 28
+[70]ReleaseDate: Nov 7, 2013
+[71]SubsysID: 2883
+[72]Subvendor: EVGA
+[73]SubvendorID: 3842
+[74]Transistors: 7100
+[75]Vendor: NVIDIA
+[76]VendorID: 10DE
+[77]Vulkan: 1
+[78]Vulkan_Version: 1.1.119
+[79]WHQL: WHQL
+
+OLD:
+[0]GPU Clock: 139 MHz
+[1]Memory Clock: 202.5 MHz
+[2]GPU Temperature: 35 °C
+[3]Fan Speed (%): 30 %%
+[4]Memory Used: 1607.1953125 MB
+[5]GPU Load: 5 %%
+[6]Memory Controller Load: 33 %%
+[7]Video Engine Load: 0 %%
+[8]Bus Interface Load: 1 %%
+[9]PerfCap Reason: 16 
+[10]VDDC: 0.693 V
+[11]CPU Temperature: 43 °C
+[12]System Memory Used: 7552.1875 MB
+
+[0]BIOSUEFI: 1
+[1]BIOSVersion: 86.07.22.00.87
+[2]Bus: 1
+[3]BusInterface: PCIe x16 3.0 @ x16 1.1
+[4]CUDA: 1
+[5]CUDA_Capability: 6.1
+[6]CardName: NVIDIA GeForce GTX 1050 Ti
+[7]ClockGPU: 1291
+[8]ClockGPUBase: 
+[9]ClockGPUBaseDefault: 1291
+[10]ClockGPUBoost: 1392
+[11]ClockGPUBoostDefault: 1392
+[12]ClockGPUDefault: 1291
+[13]ClockMem: 1752
+[14]ClockMemDefault: 1752
+[15]ClockShader: 
+[16]ClockShaderDefault: 
+[17]DXCompute: 1
+[18]DXCompute_Capability: 5.0
+[19]DXR: 0
+[20]Dev: 0
+[21]DeviceID: 1C82
+[22]DieSize: 132
+[23]DirectML: 1
+[24]DirectXSupport: 12 (12_1)
+[25]DriverDate: Dec 24, 2019
+[26]DriverVersion: 26.21.14.4187 (NVIDIA 441.87) DCH / Win10 64
+[27]FillratePixel: 44.5
+[28]FillrateTexel: 66.8
+[29]Fn: 0
+[30]GPUName: GP107
+[31]GPURevision: A1
+[32]HasBoostClocks: 1
+[33]MemBandwidth: 112.1
+[34]MemBusWidth: 128
+[35]MemSize: 4096
+[36]MemSizeForDisplay: 4096 MB
+[37]MemType: GDDR5
+[38]MemVendor: Micron
+[39]Monitor 1\AspectRatio: 17:9
+[40]Monitor 1\DPMSSupport: Standby
+[41]Monitor 1\DisplayDiagonal: 34.1"
+[42]Monitor 1\DisplayHeight: 33
+[43]Monitor 1\DisplayWidth: 80
+[44]Monitor 1\Gamma: 2.20
+[45]Monitor 1\HRefreshMax: 225
+[46]Monitor 1\HRefreshMin: 30
+[47]Monitor 1\Manufactured: Week 11 / 2019
+[48]Monitor 1\MaxResX: 3440
+[49]Monitor 1\MaxResY: 1440
+[50]Monitor 1\Model:  34GK950F  (GSM7727)
+[51]Monitor 1\Serial: 275999
+[52]Monitor 1\Type: DisplayPort
+[53]Monitor 1\VRefreshMax: 144
+[54]Monitor 1\VRefreshMin: 60
+[55]MonitorCount: 1
+[56]MultiGPU0: Not supported by GPU
+[57]MultiGPUName: NVIDIA SLI
+[58]NumROPs: 32
+[59]NumShadersPixel: 
+[60]NumShadersUnified: 768
+[61]NumShadersVertex: 
+[62]NumTMUs: 48
+[63]OpenCL: 1
+[64]OpenCL_Profile: Full
+[65]OpenCL_Version: OpenCL 1.2 CUDA
+[66]OpenGL: 1
+[67]OpenGL_Version: 4.6
+[68]PhysX: 1
+[69]ProcessSize: 14
+[70]ReleaseDate: Oct 25, 2016
+[71]SubsysID: 1C82
+[72]Subvendor: NVIDIA
+[73]SubvendorID: 10DE
+[74]Transistors: 3300
+[75]Vendor: NVIDIA
+[76]VendorID: 10DE
+[77]Vulkan: 1
+[78]Vulkan_Version: 1.1.119
+[79]WHQL: WHQL

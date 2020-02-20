@@ -1,0 +1,14 @@
+
+RPiLCDClientConsole/bin/*
+RPiLCDClientConsole/obj/*
+RPiLCDDesktopClient/bin/*
+RPiLCDDesktopClient/obj/*
+RPiLCDDesktopClientAvalonia/bin/*
+RPiLCDDesktopClientAvalonia/obj/*
+RPiLCDDesktopClientWPF/bin/*
+RPiLCDDesktopClientWPF/obj/*
+RPiLCDPiServer/bin/*
+RPiLCDPiServer/obj/*
+RPiLCDPiServer/publish/*
+RPiLCDPiServer/tools/*
+RPiLCDPiServer/Assets/avalonia-logo.ico

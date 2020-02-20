@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RPiLCDClientConsole\RPiLCDClientConsole.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="GetCoreTempInfoNET">
+      <HintPath>..\RPiLCDClientConsole\Libraries\GetCoreTempInfoNET.dll</HintPath>
+    </Reference>
+    <Reference Include="GpuzShMem">
+      <HintPath>Libraries\GpuzShMem.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

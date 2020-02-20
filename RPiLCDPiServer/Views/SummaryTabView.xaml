@@ -1,0 +1,176 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:RPiLCDPiServer.ViewModels;assembly=RPiLCDPiServer"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RPiLCDPiServer.Views.SummaryTabView"
+             xmlns:converters="clr-namespace:RPiLCDPiServer.Converters;assembly=RPiLCDPiServer"
+             xmlns:clr="clr-namespace:System;assembly=mscorlib">
+
+  <UserControl.DataContext>
+    <vm:SummaryTabViewModel/>
+  </UserControl.DataContext>
+
+  <UserControl.Resources>
+    <clr:String x:Key="headphoneIcon">LCDStatsApp/Assets/UIImages/ButtonHeadphone.png</clr:String>
+    <clr:String x:Key="speakerIcon">LCDStatsApp/Assets/UIImages/ButtonSpeaker.png</clr:String>
+    <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
+  </UserControl.Resources>
+  
+  <StackPanel>
+    <TextBlock Text="{Binding TimeString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="72" FontFamily="Piboto Condensed, Arial"/>
+    <TextBlock Text="{Binding DateString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="24" FontFamily="Piboto Condensed, Arial"/>
+
+    <Grid RowDefinitions="*">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="128"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="200"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <StackPanel Grid.Column="0" Grid.Row="0" Margin="3">
+        <TextBlock Text="GPU Load" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="15" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="15" Width="{Binding GPULoadFloat}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+          <TextBlock Grid.Column="1" Text="{Binding GPULoadString}" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        </Grid>
+
+        <TextBlock Text="GPU Memory" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="15" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="15" Width="{Binding GPUMemoryBarWidth}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+          <TextBlock Grid.Column="1" Text="{Binding GPUMemoryString}" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        </Grid>
+
+        <Rectangle Height="10"/>
+
+        <TextBlock Text="System Memory" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="15" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="15" Width="{Binding SystemMemoryBarWidth}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+          <TextBlock Grid.Column="1" Text="{Binding SystemMemoryUsageString}" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        </Grid>
+        
+
+      </StackPanel>
+
+      
+      <StackPanel Grid.Column="1" Grid.Row="0">
+        <TextBlock Text="CPU Load" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="10" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="10" Width="{Binding CPU1LoadBarWidth}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+        </Grid>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="10" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="10" Width="{Binding CPU2LoadBarWidth}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+        </Grid>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="10" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="10" Width="{Binding CPU3LoadBarWidth}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+        </Grid>
+
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="205"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Rectangle Grid.Column="0" Height="10" Width="200" Fill="#222222" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+          <Rectangle Grid.Column="0" Height="10" Width="{Binding CPU4LoadBarWidth}" Fill="#800000" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Rectangle.Transitions>
+              <DoubleTransition Property="Width" Duration="0:0:0.5"/>
+            </Rectangle.Transitions>
+          </Rectangle>
+          <TextBlock Grid.Column="1" Text="{Binding CPULoadString}" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Grid.Column="2" Grid.Row="0">
+        <Grid>
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding SetSpeakerAudioCommand}" IsVisible="{Binding !CurrentAudioIsSpeaker}" IsEnabled="{Binding !AudioSwapButtonDisabled}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource headphoneIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding SetHeadphoneAudioCommand}" IsVisible="{Binding CurrentAudioIsSpeaker}" IsEnabled="{Binding !AudioSwapButtonDisabled}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource speakerIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+        </Grid>
+      </StackPanel>
+
+      <StackPanel Grid.Column="0" Grid.Row="1">
+        <TextBlock Text="GPU Temperature" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        <TextBlock Text="{Binding GPUTempString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="48" FontFamily="Piboto Condensed, Arial"/>
+      </StackPanel>
+      
+      <StackPanel Grid.Column="1" Grid.Row="1">
+        <TextBlock Text="CPU Temperature" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
+        <TextBlock Text="{Binding CPUTempString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="48" FontFamily="Piboto Condensed, Arial"/>
+      </StackPanel>     
+      
+    </Grid>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,16 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:RPiLCDPiServer.ViewModels;assembly=RPiLCDPiServer"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RPiLCDPiServer.Views.GPUTabView">
+  
+  <UserControl.DataContext>
+    <vm:GPUTabViewModel/>
+  </UserControl.DataContext>
+  
+  <StackPanel>
+    <TextBlock Text="{Binding GPULoad}" Foreground="#800000" HorizontalAlignment="Center" FontSize="72" FontFamily="Piboto Condensed, Arial"/>
+  </StackPanel>
+</UserControl>

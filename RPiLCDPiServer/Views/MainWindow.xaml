@@ -1,0 +1,130 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:RPiLCDPiServer.ViewModels;assembly=RPiLCDPiServer"
+        xmlns:views="clr-namespace:RPiLCDPiServer.Views;assembly=RPiLCDPiServer"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:RPiLCDPiServer.Converters;assembly=RPiLCDPiServer"
+        xmlns:defaultConverters="clr-namespace:Avalonia.Markup.Xaml.Converters;assembly=Avalonia"
+        xmlns:clr="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d" d:DesignWidth="790" d:DesignHeight="470"
+        x:Class="RPiLCDPiServer.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RPiLCDPiServer" Width="790" Height="470" Background="Black">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <Window.Resources>
+    <clr:String x:Key="gpuIcon">LCDStatsApp/Assets/UIImages/ButtonGPU.png</clr:String>
+    <clr:String x:Key="gpuSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonGPUSelected.png</clr:String>
+
+    <clr:String x:Key="cpuIcon">LCDStatsApp/Assets/UIImages/ButtonCPU.png</clr:String>
+    <clr:String x:Key="cpuSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonCPUSelected.png</clr:String>
+
+    <clr:String x:Key="summaryIcon">LCDStatsApp/Assets/UIImages/ButtonSummary.png</clr:String>
+    <clr:String x:Key="summarySelectedIcon">LCDStatsApp/Assets/UIImages/ButtonSummarySelected.png</clr:String>
+
+    <clr:String x:Key="settingsIcon">LCDStatsApp/Assets/UIImages/ButtonSettings.png</clr:String>
+    <clr:String x:Key="settingsSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonSettingsSelected.png</clr:String>
+
+    <clr:String x:Key="exitIcon">LCDStatsApp/Assets/UIImages/ButtonExit.png</clr:String>
+    <clr:String x:Key="powerIcon">LCDStatsApp/Assets/UIImages/ButtonPower.png</clr:String>
+    
+    <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
+  </Window.Resources>
+
+  <StackPanel Orientation="Horizontal" Height="{Binding ScreenHeight}" VerticalAlignment="Center">
+    <DockPanel HorizontalAlignment="Left" Height="{Binding ScreenHeight}"  Width="64"  Background="#800000">
+      <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding ScreenHeightWithoutButton}" Width="64" Orientation="Vertical">
+        <Grid HorizontalAlignment="Left" Height="64" Width="64" >
+          <Image Source="{Binding Source={StaticResource summarySelectedIcon}, Converter={StaticResource pathToBitmapConverter}}" IsVisible="{Binding ShowingSummaryTab}" />
+          <Button VerticalAlignment="Center" Height="64" Width="64" Command="{Binding SetTabSummaryCommand}" IsVisible="{Binding !ShowingSummaryTab}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource summaryIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="64" Width="64" >
+          <Image Source="{Binding Source={StaticResource cpuSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}"  IsVisible="{Binding ShowingCPUTab}"/>
+          <Button VerticalAlignment="Center" Height="64" Width="64" Command="{Binding SetTabCPUCommand}" IsVisible="{Binding !ShowingCPUTab}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource cpuIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="64" Width="64" >
+          <Image Source="{Binding Source={StaticResource gpuSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}" IsVisible="{Binding ShowingGPUTab}"/>
+          <Button VerticalAlignment="Center" Height="64" Width="64" Command="{Binding SetTabGPUCommand}" IsVisible="{Binding !ShowingGPUTab}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource gpuIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+        </Grid>
+
+      </StackPanel>
+      <Grid HorizontalAlignment="Left" Height="64" Width="64" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+        <Image Source="{Binding Source={StaticResource settingsSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}"  IsVisible="{Binding ShowingSettingsTab}"/>
+        <Button VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding SetTabSettingsCommand}" IsVisible="{Binding !ShowingSettingsTab}" Padding="0">
+          <Button.Template>
+            <ControlTemplate>
+              <Image Source="{Binding Source={StaticResource settingsIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+            </ControlTemplate>
+          </Button.Template>
+        </Button>
+      </Grid>
+    </DockPanel>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingSummaryTab}">
+      <DockPanel>
+        <views:SummaryTabView/>
+      </DockPanel>
+    </Grid>
+
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingCPUTab}">
+
+    </DockPanel>
+
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingGPUTab}">
+      <views:GPUTabView/>
+    </DockPanel>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingSettingsTab}">
+      <DockPanel>
+        <DockPanel.DataContext>
+          <vm:SettingsTabViewModel/>
+        </DockPanel.DataContext>
+
+        <Grid DockPanel.Dock="Top">
+          <StackPanel>
+            <TextBlock Text="Brightness" Foreground="White"/>
+            <Slider Width="{Binding ScreenWidthWithoutSidebar}" Height="40" Minimum="{Binding MinBrightness}" Maximum="{Binding MaxBrightness}" Value="{Binding CurrentBrightness}"/>
+          </StackPanel>
+        </Grid>
+
+        <Button DockPanel.Dock="Right" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="64" Width="64" Command="{Binding ShutdownCommand}" Padding="0">
+          <Button.Template>
+            <ControlTemplate>
+              <Image Source="{Binding Source={StaticResource powerIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+            </ControlTemplate>
+          </Button.Template>
+        </Button>
+        <Button DockPanel.Dock="Right" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="64" Width="64" Command="{Binding ExitToOSCommand}" Padding="0">
+          <Button.Template>
+            <ControlTemplate>
+              <Image Source="{Binding Source={StaticResource exitIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+            </ControlTemplate>
+          </Button.Template>
+        </Button>
+      </DockPanel>
+    </Grid>
+  </StackPanel>
+
+</Window>
