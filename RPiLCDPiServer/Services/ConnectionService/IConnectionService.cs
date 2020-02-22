@@ -1,4 +1,4 @@
-﻿using System;
+﻿using RPiLCDShared.Services;
 
 namespace RPiLCDPiServer.Services.ConnectionService
 {

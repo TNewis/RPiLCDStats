@@ -3,16 +3,23 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using RPiLCDClientConsole;
+using RPiLCDShared.Services;
 
 namespace RPiLCDPiServer.Services.ConnectionService
 {
     class LANStatsServer : ConnectionService
     {
+        private static ILoggingService _loggingService;
+
         public static ManualResetEvent allDone = new ManualResetEvent(false);
 
         private static Socket _listener;
-        private static readonly StringBuilder _response= new StringBuilder();
+        private static readonly StringBuilder _response = new StringBuilder();
+
+        public override void SetLoggingService(ILoggingService loggingService)
+        {
+            _loggingService = loggingService;
+        }
 
         public override void OpenConnection()
         {
@@ -47,7 +54,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
 
         public static void StartListening()
         {
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");//("192.168.0.21");
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 13202);
 
             _listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -61,7 +68,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
                 {
                     allDone.Reset();
 
-                    Console.WriteLine("Waiting for a connection on " + ipAddress.ToString() + ":" + localEndPoint.Port.ToString());
+                    _loggingService.LogMessage("Waiting for a connection on " + ipAddress.ToString() + ":" + localEndPoint.Port.ToString());
                     _listener.BeginAccept(new AsyncCallback(AcceptCallback), _listener);
 
                     allDone.WaitOne();
@@ -69,11 +76,8 @@ namespace RPiLCDPiServer.Services.ConnectionService
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                _loggingService.LogError(e.ToString());
             }
-
-            Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
 
         }
 
@@ -85,13 +89,13 @@ namespace RPiLCDPiServer.Services.ConnectionService
 
                 Socket listener = (Socket)ar.AsyncState;
                 Socket handler = listener.EndAccept(ar);
-                DataContract state = new DataContract{ workSocket = handler };
+                DataContract state = new DataContract { workSocket = handler };
                 handler.BeginReceive(state.buffer, 0, DataContract.BufferSize, 0, new AsyncCallback(ReadCallback), state);
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                _loggingService.LogError(e.ToString());
             }
         }
 
@@ -108,7 +112,15 @@ namespace RPiLCDPiServer.Services.ConnectionService
             }
             catch (SocketException se)
             {
-                Console.WriteLine(se.Message);
+                if (se.ErrorCode == 10054)
+                {
+                    _loggingService.LogTrigger(LogTriggerTypes.ConnectionClosed);
+                }
+                else
+                {
+                    _loggingService.LogError(se.Message);
+                }
+
             }
 
             if (bytesRead > 0)
@@ -123,7 +135,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
 
                     state.stringBuilder.Clear();
 
-                    content = _response.ToString()+"<EOF>";
+                    content = _response.ToString() + "<EOF>";
                     Send(handler, content);
                     _response.Clear();
                     handler.BeginReceive(state.buffer, 0, DataContract.BufferSize, 0, new AsyncCallback(ReadCallback), state);
@@ -146,16 +158,16 @@ namespace RPiLCDPiServer.Services.ConnectionService
             {
                 if (se.ErrorCode == 10053)
                 {
-                    Console.WriteLine("Established connection aborted. Did the server shutdown?");
+                    _loggingService.LogError("Established connection aborted. Did the server shutdown?");
                 }
                 else
                 {
-                    Console.WriteLine(se.Message);
+                    _loggingService.LogError(se.Message);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _loggingService.LogError(e.Message);
             }
 
         }

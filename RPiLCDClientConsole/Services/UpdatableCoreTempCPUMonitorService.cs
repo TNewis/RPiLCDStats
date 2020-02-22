@@ -1,14 +1,14 @@
-﻿using RPiLCDPiServer.Services.ConnectionService;
-using System;
+﻿using System;
 using GetCoreTempInfoNET;
 using System.Linq;
+using RPiLCDShared.Services;
 
 namespace RPiLCDClientConsole.Services
 {
     public class UpdatableCoreTempCPUMonitorService : UpdateableService, IUpdatableService
     {
-        private Tag _tabTag = UpdateTags.CPUTabTag;
-        private CoreTempInfo _coreTemp;
+        private readonly Tag _tabTag = UpdateTags.CPUTabTag;
+        private readonly CoreTempInfo _coreTemp;
         private readonly ILoggingService _loggingService;
 
         public UpdatableCoreTempCPUMonitorService(ILoggingService loggingService)

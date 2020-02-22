@@ -17,6 +17,7 @@
   </Design.DataContext>
 
   <Window.Resources>
+    <!--LCDStatsApp/Assets/UIImages/ButtonGPU.png-->
     <clr:String x:Key="gpuIcon">LCDStatsApp/Assets/UIImages/ButtonGPU.png</clr:String>
     <clr:String x:Key="gpuSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonGPUSelected.png</clr:String>
 
@@ -28,6 +29,9 @@
 
     <clr:String x:Key="settingsIcon">LCDStatsApp/Assets/UIImages/ButtonSettings.png</clr:String>
     <clr:String x:Key="settingsSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonSettingsSelected.png</clr:String>
+
+    <clr:String x:Key="consoleIcon">LCDStatsApp/Assets/UIImages/ButtonConsole.png</clr:String>
+    <clr:String x:Key="consoleSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonConsoleSelected.png</clr:String>
 
     <clr:String x:Key="exitIcon">LCDStatsApp/Assets/UIImages/ButtonExit.png</clr:String>
     <clr:String x:Key="powerIcon">LCDStatsApp/Assets/UIImages/ButtonPower.png</clr:String>
@@ -68,7 +72,16 @@
             </Button.Template>
           </Button>
         </Grid>
-
+        <Grid HorizontalAlignment="Left" Height="64" Width="64" >
+          <Image Source="{Binding Source={StaticResource consoleSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}" IsVisible="{Binding ShowingConsoleTab}"/>
+          <Button VerticalAlignment="Center" Height="64" Width="64" Command="{Binding SetTabConsoleCommand}" IsVisible="{Binding !ShowingConsoleTab}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource consoleIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+        </Grid>
       </StackPanel>
       <Grid HorizontalAlignment="Left" Height="64" Width="64" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
         <Image Source="{Binding Source={StaticResource settingsSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}"  IsVisible="{Binding ShowingSettingsTab}"/>
@@ -96,6 +109,10 @@
       <views:GPUTabView/>
     </DockPanel>
 
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingConsoleTab}">
+      <views:ConsoleTabView/>
+    </DockPanel>
+    
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingSettingsTab}">
       <DockPanel>
         <DockPanel.DataContext>

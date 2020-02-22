@@ -1,7 +1,4 @@
-﻿using RPiLCDPiServer.Services.ConnectionService;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RPiLCDShared.Services;
 
 namespace RPiLCDClientConsole.Services
 {

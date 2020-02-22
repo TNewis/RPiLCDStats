@@ -12,14 +12,15 @@
       <SubType>Designer</SubType>
     </AvaloniaResource>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Remove="Views\ConsoleTabView.xaml" />
     <AvaloniaResource Remove="Views\CPUTabView.xaml" />
     <AvaloniaResource Remove="Views\GPUTabView.xaml" />
     <AvaloniaResource Remove="Views\SummaryTabView.xaml" />
     <Folder Include="Models\" />
+    <None Remove="Views\ConsoleTabView.xaml" />
     <None Remove="Views\CPUTabView.xaml" />
     <None Remove="Views\GPUTabView.xaml" />
     <None Remove="Views\SummaryTabView.xaml" />
-    <Compile Include="..\RPiLCDClientConsole\DataContract.cs" Link="Services\ConnectionService\DataContract.cs" />
     <Folder Include="Client\" />
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +45,20 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\ConsoleTabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RPiShared\RPiShared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\UIImages\ButtonConsole.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\UIImages\ButtonConsoleSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\UIImages\ButtonCPU.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

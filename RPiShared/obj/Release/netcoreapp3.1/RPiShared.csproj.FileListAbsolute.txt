@@ -1,0 +1,8 @@
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\bin\Release\netcoreapp3.1\RPiShared.deps.json
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\bin\Release\netcoreapp3.1\RPiShared.dll
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\bin\Release\netcoreapp3.1\RPiShared.pdb
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\obj\Release\netcoreapp3.1\RPiShared.csprojAssemblyReference.cache
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\obj\Release\netcoreapp3.1\RPiShared.AssemblyInfoInputs.cache
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\obj\Release\netcoreapp3.1\RPiShared.AssemblyInfo.cs
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\obj\Release\netcoreapp3.1\RPiShared.dll
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiShared\obj\Release\netcoreapp3.1\RPiShared.pdb

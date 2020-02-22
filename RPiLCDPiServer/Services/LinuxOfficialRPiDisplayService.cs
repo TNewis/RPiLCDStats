@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.IO;
+﻿using System.IO;
+using RPiLCDShared.Services;
 
 namespace RPiLCDPiServer.Services
 {
     class LinuxOfficialRPiDisplayService : IDisplayControlService
     {
+        private ILoggingService _loggingService;
+        public void SetLoggingService(ILoggingService loggingService)
+        {
+            _loggingService = loggingService;
+        }
         public int GetMaxBrightness()
         {
             return 255;

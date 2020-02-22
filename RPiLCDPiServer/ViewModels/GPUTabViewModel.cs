@@ -1,9 +1,7 @@
 ﻿using ReactiveUI;
 using RPiLCDPiServer.Services.ConnectionService;
 using RPiLCDPiServer.Settings;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using RPiLCDShared.Services;
 
 namespace RPiLCDPiServer.ViewModels
 {

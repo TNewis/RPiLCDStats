@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using RPiLCDClientConsole.Services;
+using RPiLCDShared.Services;
 
 namespace RPiLCDClientConsole
 {
@@ -16,9 +16,9 @@ namespace RPiLCDClientConsole
 
         private const int port = 13202;
 
-        private static ManualResetEvent _connectDone = new ManualResetEvent(false);
-        private static ManualResetEvent _sendDone = new ManualResetEvent(false);
-        private static ManualResetEvent _receiveDone = new ManualResetEvent(false);
+        private static readonly ManualResetEvent _connectDone = new ManualResetEvent(false);
+        private static readonly ManualResetEvent _sendDone = new ManualResetEvent(false);
+        private static readonly ManualResetEvent _receiveDone = new ManualResetEvent(false);
 
         public static event EventHandler<UpdateRecievedEventArgs> RaiseUpdateRecievedEvent;
         protected static UpdateRecievedEventArgs _args = new UpdateRecievedEventArgs();
@@ -84,7 +84,7 @@ namespace RPiLCDClientConsole
             _connecting = true;
             try
             {
-                IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+                IPAddress ipAddress = IPAddress.Parse("127.0.0.1");//("192.168.0.21");
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
                 if (_clientSocket == null)

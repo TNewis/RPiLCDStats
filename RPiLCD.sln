@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPiLCDDesktopClient", "RPiL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPiLCDDesktopClientAvalonia", "RPiLCDDesktopClientAvalonia\RPiLCDDesktopClientAvalonia.csproj", "{EB4A0B8E-8ABA-4864-B8CC-A9FD92811647}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPiShared", "RPiShared\RPiShared.csproj", "{08257291-237F-462C-A6BE-21FF16121A0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{EB4A0B8E-8ABA-4864-B8CC-A9FD92811647}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB4A0B8E-8ABA-4864-B8CC-A9FD92811647}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB4A0B8E-8ABA-4864-B8CC-A9FD92811647}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08257291-237F-462C-A6BE-21FF16121A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08257291-237F-462C-A6BE-21FF16121A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08257291-237F-462C-A6BE-21FF16121A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08257291-237F-462C-A6BE-21FF16121A0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

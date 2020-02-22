@@ -1,6 +1,6 @@
-﻿using RPiLCDPiServer.Services.ConnectionService;
-using RPiLCDClientConsole.Services;
+﻿using RPiLCDClientConsole.Services;
 using System.Collections.Generic;
+using RPiLCDShared.Services;
 
 namespace RPiLCDClientConsole.Update
 {

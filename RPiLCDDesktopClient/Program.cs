@@ -1,6 +1,7 @@
 using RPiLCDClientConsole;
 using RPiLCDClientConsole.Services;
 using RPiLCDClientConsole.Update;
+using RPiLCDShared.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;

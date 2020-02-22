@@ -17,12 +17,21 @@
     <clr:String x:Key="speakerIcon">LCDStatsApp/Assets/UIImages/ButtonSpeaker.png</clr:String>
     <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
   </UserControl.Resources>
-  
+
   <StackPanel>
     <TextBlock Text="{Binding TimeString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="72" FontFamily="Piboto Condensed, Arial"/>
     <TextBlock Text="{Binding DateString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="24" FontFamily="Piboto Condensed, Arial"/>
 
-    <Grid RowDefinitions="*">
+    <Grid RowDefinitions="200" ColumnDefinitions="*" IsVisible="{Binding ShutdownWarningVisibility}" Background="#D40000">
+      <StackPanel>
+        <TextBlock Text="Connection Closed" Foreground="Black" HorizontalAlignment="Center" FontSize="72" FontFamily="Piboto Condensed, Arial"/>
+        <TextBlock Text="Raspberry Pi will shutdown in:" Foreground="Black" HorizontalAlignment="Center" FontSize="24" FontFamily="Piboto Condensed, Arial"/>
+        <TextBlock Text="{Binding SecondsUntilShutdown}" Foreground="Black" HorizontalAlignment="Center" FontSize="48" FontFamily="Piboto Condensed, Arial"/>
+        <Button Command="{Binding CancelShutdownCommand}" Content="Cancel" Width="200" BorderThickness="0" FontSize="24" Foreground="White" Background="#800000" FontFamily="Piboto Condensed, Arial"/>
+      </StackPanel>
+    </Grid>
+
+    <Grid RowDefinitions="*" IsVisible="{Binding !ShutdownWarningVisibility}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="*"/>
@@ -79,11 +88,9 @@
           </Rectangle>
           <TextBlock Grid.Column="1" Text="{Binding SystemMemoryUsageString}" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
         </Grid>
-        
-
       </StackPanel>
 
-      
+
       <StackPanel Grid.Column="1" Grid.Row="0">
         <TextBlock Text="CPU Load" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
         <Grid>
@@ -165,12 +172,12 @@
         <TextBlock Text="GPU Temperature" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
         <TextBlock Text="{Binding GPUTempString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="48" FontFamily="Piboto Condensed, Arial"/>
       </StackPanel>
-      
+
       <StackPanel Grid.Column="1" Grid.Row="1">
         <TextBlock Text="CPU Temperature" Foreground="#800000" HorizontalAlignment="Left" FontSize="16" FontFamily="Piboto Condensed, Arial"/>
         <TextBlock Text="{Binding CPUTempString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="48" FontFamily="Piboto Condensed, Arial"/>
-      </StackPanel>     
-      
+      </StackPanel>
+
     </Grid>
   </StackPanel>
 </UserControl>

@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RPiLCDShared.Services;
 
 namespace RPiLCDPiServer.Services.DummyServices
 {
     class DummyShutdownService : IShutdownService
     {
+        private ILoggingService _loggingService;
+        public void SetLoggingService(ILoggingService loggingService)
+        {
+            _loggingService = loggingService;
+        }
         public void Shutdown()
         {
-            Console.WriteLine("Woosh your computer is off now.");
+            _loggingService.LogMessage("Woosh your computer is off now.");
         }
     }
 }

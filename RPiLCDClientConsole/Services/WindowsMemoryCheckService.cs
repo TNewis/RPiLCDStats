@@ -1,4 +1,4 @@
-﻿using RPiLCDPiServer.Services.ConnectionService;
+﻿using RPiLCDShared.Services;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -16,8 +16,7 @@ namespace RPiLCDClientConsole.Services
 
         public string GetStaticData()
         {
-            long memKb;
-            GetPhysicallyInstalledSystemMemory(out memKb);
+            GetPhysicallyInstalledSystemMemory(out long memKb);
             return TagifyString((memKb / 1024).ToString(), UpdateTags.PCMemoryTotalTag);
         }
 

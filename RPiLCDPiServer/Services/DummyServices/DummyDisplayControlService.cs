@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RPiLCDShared.Services;
 
 namespace RPiLCDPiServer.Services.DummyServices
 {
     class DummyDisplayControlService : IDisplayControlService
     {
+        private ILoggingService _loggingService;
+        public void SetLoggingService(ILoggingService loggingService)
+        {
+            _loggingService = loggingService;
+        }
+
         public int GetMaxBrightness()
         {
             return 100;
@@ -23,7 +27,7 @@ namespace RPiLCDPiServer.Services.DummyServices
 
         public void SetBrightness(int brightness)
         {
-            Console.WriteLine("Woosh screen brightness is now "+ brightness);
+            _loggingService.LogMessage("Woosh screen brightness is now "+ brightness);
         }
     }
 }

@@ -1,21 +1,20 @@
-﻿using RPiLCDPiServer.Services.ConnectionService;
-using RPiLCDClientConsole.Libraries;
+﻿using RPiLCDClientConsole.Libraries;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using RPiLCDShared.Services;
 
 namespace RPiLCDClientConsole.Services
 {
     public class UpdatableGPUzMonitorService : UpdateableService, IUpdatableService, IStaticDataService
     {
         private readonly ILoggingService _loggingService;
-        private Tag _tabTag = UpdateTags.GPUTabTag;
+        private readonly Tag _tabTag = UpdateTags.GPUTabTag;
 
-        private GPUzWrapper _gpuz;
+        private readonly GPUzWrapper _gpuz;
         private bool _gpuzMemoryOpen;
 
         public UpdatableGPUzMonitorService(ILoggingService loggingService)
         {
+            _loggingService = loggingService;
             _gpuz = new GPUzWrapper();
         }
 

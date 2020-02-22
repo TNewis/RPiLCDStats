@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RPiLCDClientConsole\RPiLCDClientConsole.csproj" />
+    <ProjectReference Include="..\RPiShared\RPiShared.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GetCoreTempInfoNET">

@@ -1,26 +1,26 @@
 ﻿using ReactiveUI;
+using RPiLCDPiServer.Services;
 using RPiLCDPiServer.Settings;
-using System;
+using RPiLCDShared.Services;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 
 namespace RPiLCDPiServer.ViewModels
 {
     public class ConsoleTabViewModel : ViewModelBase
     {
-        private Timer _timer;
+        private readonly LogToEventService _loggingService;
 
-        private string _consoleString = "No Entries";
+        private StringBuilder _consoleStringBuilder;
+        private Queue<ConsoleMessage> _messages = new Queue<ConsoleMessage>();
+        private int _messageQueueLength = 25;
+
+        private string _consoleString = "...";
         public string ConsoleString
         {
             get { return _consoleString; }
             set { this.RaiseAndSetIfChanged(ref _consoleString, value); }
         }
-
-        private StringWriter _consoleStringWriter;
 
         public int ScreenWidth { get; set; }
         public int ScreenWidthWithoutSidebar { get; set; }
@@ -29,29 +29,42 @@ namespace RPiLCDPiServer.ViewModels
 
         public ConsoleTabViewModel()
         {
-            //_consoleStringWriter = new StringWriter();
-            //Console.SetOut(_consoleStringWriter);
-            //Console.SetError(_consoleStringWriter);
-            //ConsoleString = _consoleStringWriter.ToString();
-
             ScreenWidth = DisplaySettings.ScreenWidth;
             ScreenWidthWithoutSidebar = DisplaySettings.ScreenWidthWithoutSidebar;
             ScreenHeight = DisplaySettings.ScreenHeight;
             ScreenHeightWithoutButton = DisplaySettings.ScreenHeightWithoutButton;
 
-            //_timer = new Timer(1000);
-            //_timer.AutoReset = true;
-            //_timer.Elapsed += async (sender, e) => await UpdateConsoleString();
-            //_timer.Start();
+            _consoleStringBuilder = new StringBuilder();
+
+            var serviceSelector = new ServiceSelector();
+
+            _loggingService = (LogToEventService)serviceSelector.GetLoggingService();
+            if (_loggingService != null)
+            {
+                _loggingService.MessageLoggedRecievedEvent += ShowLoggedMessageEvent;
+            }
         }
 
-        //private Task UpdateConsoleString()
-        //{
-        //    return Task.Run(() =>
-        //    {
-        //        ConsoleString = _consoleStringWriter.ToString();
-        //    });
+        private void ShowLoggedMessageEvent(object sender, MessageLoggedEventArgs a)
+        {
+            _messages.Enqueue(new ConsoleMessage() { message = a.LoggedMessage, level = a.MessageLevel });
+            if (_messages.Count > _messageQueueLength)
+            {
+                _messages.Dequeue();
+            }
 
-        //}
+            _consoleStringBuilder.Clear();
+            foreach (ConsoleMessage message in _messages)
+            {
+                _consoleStringBuilder.AppendLine(message.message);
+            }
+            ConsoleString = _consoleStringBuilder.ToString();
+        }
     }
+
+    class ConsoleMessage
+    {
+        public string message;
+        public MessageLevel level;
+    } 
 }

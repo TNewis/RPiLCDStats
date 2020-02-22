@@ -1,4 +1,4 @@
-﻿using RPiLCDPiServer.Services.ConnectionService;
+﻿using RPiLCDShared.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +9,8 @@ namespace RPiLCDClientConsole.Services
     {
         //Updateable Clock exists for testing update builder functionality.
 
-        private Tag _tag = UpdateTags.ClockTag;
-        private Tag _tabTag = UpdateTags.ClockTabTag;
+        private readonly Tag _tag = UpdateTags.ClockTag;
+        private readonly Tag _tabTag = UpdateTags.ClockTabTag;
 
         public Tag GetUpdateTag()
         {

@@ -1,6 +1,6 @@
-﻿namespace RPiLCDPiServer.Services.ConnectionService
+﻿namespace RPiLCDShared.Services
 {
-    static class UpdateTags
+    public static class UpdateTags
     {
         public static Tag StaticDataTag = new Tag("Static");
 

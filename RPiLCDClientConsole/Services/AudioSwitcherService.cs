@@ -1,12 +1,10 @@
 ﻿using AudioSwitcher.AudioApi.CoreAudio;
 using System.Collections.Generic;
-using System.Text;
 using System;
-using System.Xml;
 using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
-using RPiLCDPiServer.Services.ConnectionService;
+using RPiLCDShared.Services;
 
 namespace RPiLCDClientConsole.Services
 {
@@ -14,10 +12,10 @@ namespace RPiLCDClientConsole.Services
     {
         private readonly ILoggingService _loggingService;
 
-        private string _savedDevicesFilePath = "SavedAudioDevices.xml";
-        private CoreAudioController _controller;
-        private SortedList<AudioDeviceOptions, CoreAudioDevice> _devices;
-        private Tag _tabTag = UpdateTags.AudioDeviceTag;
+        private readonly string _savedDevicesFilePath = "SavedAudioDevices.xml";
+        private readonly CoreAudioController _controller;
+        private readonly SortedList<AudioDeviceOptions, CoreAudioDevice> _devices;
+        private readonly Tag _tabTag = UpdateTags.AudioDeviceTag;
         private bool _audioUpdateNeeded = true;
         private AudioDeviceType _currentType = AudioDeviceType.Other;
 

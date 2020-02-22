@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace RPiLCDClientConsole
+namespace RPiLCDShared.Services
 {
     public class DataContract
     {

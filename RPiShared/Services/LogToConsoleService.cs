@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RPiLCDClientConsole.Services
+namespace RPiLCDShared.Services
 {
     public class LogToConsoleService : ILoggingService
     {
@@ -16,9 +14,17 @@ namespace RPiLCDClientConsole.Services
             Console.WriteLine(message);
         }
 
+        public void LogTrigger(LogTriggerTypes trigger)
+        {
+        }
+
         public void LogWarning(string message)
         {
             Console.WriteLine(message);
+        }
+
+        public void SetLoggingService(ILoggingService loggingService)
+        {
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using RPiLCDShared.Services;
+using System;
 
 namespace RPiLCDPiServer.Services.ConnectionService
 {
@@ -14,6 +13,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
             RaiseUpdateRecievedEvent?.Invoke(null, e); ;
         }
 
+        public abstract void SetLoggingService(ILoggingService loggingService);
         public abstract void CloseConnection();
         public abstract void OpenConnection();
         public abstract void IncludeInResponse(string response);

@@ -9,6 +9,7 @@ namespace RPiLCDPiServer.Enums
         Settings,
         Summary,
         GPU,
-        CPU
+        CPU,
+        Console
     }
 }

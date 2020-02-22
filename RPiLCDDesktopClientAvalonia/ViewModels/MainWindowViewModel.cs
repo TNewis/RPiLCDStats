@@ -4,6 +4,7 @@ using RPiLCDClientConsole.Services;
 using RPiLCDClientConsole.Update;
 using System.Threading.Tasks;
 using System.Timers;
+using RPiLCDShared.Services;
 
 namespace RPiLCDDesktopClientAvalonia.ViewModels
 {

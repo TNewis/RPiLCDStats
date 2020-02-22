@@ -1,0 +1,3 @@
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiLCDPiServer\bin\RPiShared.deps.json
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiLCDPiServer\bin\RPiShared.dll
+C:\Users\Tom\Desktop\VS Projects\RPiLCDStats\RPiLCDPiServer\bin\RPiShared.pdb

@@ -18,12 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\RPiLCDPiServer\Services\ConnectionService\UpdateTags.cs" Link="Services\UpdateTags.cs" />
+    <PackageReference Include="AudioSwitcher.AudioApi" Version="3.0.0" />
+    <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AudioSwitcher.AudioApi" Version="3.0.0" />
-    <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.0.1" />
+    <ProjectReference Include="..\RPiShared\RPiShared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
