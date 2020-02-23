@@ -38,8 +38,25 @@
     
     <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
   </Window.Resources>
+  <Grid ColumnDefinitions="*" RowDefinitions="*">
 
-  <StackPanel Orientation="Horizontal" Height="{Binding ScreenHeight}" VerticalAlignment="Center">
+    <Grid ZIndex="2" ColumnDefinitions="*" IsVisible="{Binding ShutdownWarningVisibility}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="230"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid Grid.Row="0" Background="#D4000000"/>
+      <StackPanel Grid.Row="1" Background="#D40000" Height="230">
+        <TextBlock Text="Connection Closed" Foreground="Black" HorizontalAlignment="Center" FontSize="72" FontFamily="Piboto Condensed, Arial"/>
+        <TextBlock Text="Raspberry Pi will shutdown in:" Foreground="Black" HorizontalAlignment="Center" FontSize="24" FontFamily="Piboto Condensed, Arial"/>
+        <TextBlock Text="{Binding SecondsUntilShutdown}" Foreground="Black" HorizontalAlignment="Center" FontSize="48" FontFamily="Piboto Condensed, Arial"/>
+        <Button Command="{Binding CancelShutdownCommand}" Content="Cancel" Width="200" BorderThickness="0" FontSize="24" Foreground="White" Background="#800000" FontFamily="Piboto Condensed, Arial"/>
+      </StackPanel>
+      <Grid Grid.Row="2" Background="#D4000000"/>
+    </Grid>
+
+    <StackPanel ZIndex="1" Orientation="Horizontal" Height="{Binding ScreenHeight}" VerticalAlignment="Center">
     <DockPanel HorizontalAlignment="Left" Height="{Binding ScreenHeight}"  Width="64"  Background="#800000">
       <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding ScreenHeightWithoutButton}" Width="64" Orientation="Vertical">
         <Grid HorizontalAlignment="Left" Height="64" Width="64" >
@@ -143,5 +160,6 @@
       </DockPanel>
     </Grid>
   </StackPanel>
-
+  
+  </Grid>
 </Window>

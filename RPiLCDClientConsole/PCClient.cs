@@ -84,7 +84,7 @@ namespace RPiLCDClientConsole
             _connecting = true;
             try
             {
-                IPAddress ipAddress = IPAddress.Parse("127.0.0.1");//("192.168.0.21");
+                IPAddress ipAddress = IPAddress.Parse("192.168.0.21");
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
                 if (_clientSocket == null)

@@ -15,6 +15,7 @@ namespace RPiLCDShared.Services
         {
             _args.LoggedMessage = DateTime.Now.ToLongTimeString() + ": " + message;
             _args.MessageLevel = MessageLevel.Error;
+            _args.TriggerType = LogTriggerTypes.None;
             OnMessageLogged(_args);
         }
 
@@ -22,6 +23,7 @@ namespace RPiLCDShared.Services
         {
             _args.LoggedMessage = DateTime.Now.ToLongTimeString() + ": " + message;
             _args.MessageLevel = MessageLevel.Message;
+            _args.TriggerType = LogTriggerTypes.None;
             OnMessageLogged(_args);
         }
 
@@ -29,12 +31,15 @@ namespace RPiLCDShared.Services
         {
             _args.LoggedMessage = DateTime.Now.ToLongTimeString() + ": " + message;
             _args.MessageLevel = MessageLevel.Warning;
+            _args.TriggerType = LogTriggerTypes.None;
             OnMessageLogged(_args);
         }
 
         public void LogTrigger(LogTriggerTypes trigger)
         {
             _args.TriggerType = trigger;
+            _args.MessageLevel = MessageLevel.Trigger;
+            _args.LoggedMessage = "";
             OnMessageLogged(_args);
         }
 
@@ -54,6 +59,7 @@ namespace RPiLCDShared.Services
 
     public enum MessageLevel
     {
+        Trigger,
         Message,
         Warning,
         Error

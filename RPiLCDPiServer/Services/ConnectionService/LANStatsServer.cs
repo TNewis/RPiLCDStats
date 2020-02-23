@@ -54,7 +54,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
 
         public static void StartListening()
         {
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");//("192.168.0.21");
+            IPAddress ipAddress = IPAddress.Parse("192.168.0.21");
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 13202);
 
             _listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -74,9 +74,13 @@ namespace RPiLCDPiServer.Services.ConnectionService
                     allDone.WaitOne();
                 }
             }
+            catch (SocketException se)
+            {
+                _loggingService.LogError(se.ErrorCode + ": " + se.Message);
+            }
             catch (Exception e)
             {
-                _loggingService.LogError(e.ToString());
+                _loggingService.LogError(e.Message);
             }
 
         }
@@ -93,9 +97,13 @@ namespace RPiLCDPiServer.Services.ConnectionService
                 handler.BeginReceive(state.buffer, 0, DataContract.BufferSize, 0, new AsyncCallback(ReadCallback), state);
 
             }
+            catch (SocketException se)
+            {
+                _loggingService.LogError(se.ErrorCode + ": " + se.Message);
+            }
             catch (Exception e)
             {
-                _loggingService.LogError(e.ToString());
+                _loggingService.LogError(e.Message);
             }
         }
 
@@ -112,15 +120,12 @@ namespace RPiLCDPiServer.Services.ConnectionService
             }
             catch (SocketException se)
             {
-                if (se.ErrorCode == 10054)
+                if (se.ErrorCode == 104)
                 {
+                    _loggingService.LogMessage(se.ErrorCode + ": Sending shutdown trigger.");
                     _loggingService.LogTrigger(LogTriggerTypes.ConnectionClosed);
                 }
-                else
-                {
-                    _loggingService.LogError(se.Message);
-                }
-
+                _loggingService.LogError(se.ErrorCode + ": " + se.Message);
             }
 
             if (bytesRead > 0)
@@ -156,14 +161,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
             }
             catch (SocketException se)
             {
-                if (se.ErrorCode == 10053)
-                {
-                    _loggingService.LogError("Established connection aborted. Did the server shutdown?");
-                }
-                else
-                {
-                    _loggingService.LogError(se.Message);
-                }
+                _loggingService.LogError(se.ErrorCode + ": " + se.Message);
             }
             catch (Exception e)
             {
@@ -180,9 +178,13 @@ namespace RPiLCDPiServer.Services.ConnectionService
                 int bytesSent = handler.EndSend(ar);
                 //Console.WriteLine("Sent {0} bytes to client.", bytesSent);
             }
+            catch (SocketException se)
+            {
+                _loggingService.LogError(se.ErrorCode + ": " + se.Message);
+            }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                _loggingService.LogError(e.Message);
             }
         }
     }

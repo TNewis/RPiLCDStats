@@ -13,11 +13,8 @@ namespace RPiLCDPiServer.ViewModels
     {
         public IReactiveCommand SetSpeakerAudioCommand { get; set; }
         public IReactiveCommand SetHeadphoneAudioCommand { get; set; }
-        public IReactiveCommand CancelShutdownCommand { get; set; }
 
         private readonly IConnectionService _connectionService;
-        private readonly IShutdownService _shutdownService;
-        private readonly LogToEventService _loggingService;
         public string FontSans { get; set; }
         public int ScreenWidth { get; set; }
         public int ScreenWidthWithoutSidebar { get; set; }
@@ -28,14 +25,6 @@ namespace RPiLCDPiServer.ViewModels
 
         private bool _staticDataReceived=false;
         private readonly Timer _timer;
-        private Timer _shutdownTimer;
-
-        private bool _shutdownWarningVisibility;
-        public bool ShutdownWarningVisibility
-        {
-            get { return _shutdownWarningVisibility; }
-            set { this.RaiseAndSetIfChanged(ref _shutdownWarningVisibility, value); }
-        }
 
         private bool _audioSwapButtonDisabled;
         public bool AudioSwapButtonDisabled
@@ -158,20 +147,11 @@ namespace RPiLCDPiServer.ViewModels
             set { this.RaiseAndSetIfChanged(ref _gpuTempString, value); }
         }
 
-        private int _secondsUntilShutdownInt;
-        private string _secondsUntilShutdown;
-        public string SecondsUntilShutdown
-        {
-            get { return _secondsUntilShutdown; }
-            set { this.RaiseAndSetIfChanged(ref _secondsUntilShutdown, value); }
-        }
-
         public SummaryTabViewModel()
         {
             SetSpeakerAudioCommand = ReactiveCommand.Create(() => { SetAudioOutputToSpeaker(); });
             SetHeadphoneAudioCommand = ReactiveCommand.Create(() => { SetAudioOutputToHeadphone(); });
 
-            CancelShutdownCommand = ReactiveCommand.Create(() => { CancelShutdownTimer(); });
 
             ScreenWidth = DisplaySettings.ScreenWidth;
             ScreenWidthWithoutSidebar = DisplaySettings.ScreenWidthWithoutSidebar;
@@ -179,13 +159,6 @@ namespace RPiLCDPiServer.ViewModels
             ScreenHeightWithoutButton = DisplaySettings.ScreenHeightWithoutButton;
 
             var serviceSelector = new ServiceSelector();
-            _loggingService = (LogToEventService)serviceSelector.GetLoggingService();
-            if (_loggingService != null)
-            {
-                _loggingService.MessageLoggedRecievedEvent += HandleLoggingTriggers;
-            }
-
-            _shutdownService = serviceSelector.GetServiceInstance<IShutdownService>();
 
             _connectionService = serviceSelector.GetServiceInstance<IConnectionService>();
             ConnectionService.RaiseUpdateRecievedEvent += HandleUpdateRecievedEvent;
@@ -193,26 +166,6 @@ namespace RPiLCDPiServer.ViewModels
             _timer = new Timer(1000){ AutoReset = true };
             _timer.Elapsed += async (sender, e) => await ClockUpdate();
             _timer.Start();
-        }
-
-        private void HandleLoggingTriggers(object sender, MessageLoggedEventArgs e)
-        {
-            if (e.TriggerType == LogTriggerTypes.ConnectionClosed)
-            {
-                SecondsUntilShutdown = "5";
-                _secondsUntilShutdownInt = 5;
-                ShutdownWarningVisibility = true;
-                _shutdownTimer = new Timer(1000);
-                _shutdownTimer.Elapsed += async (sender, e) => await TimedShutdown();
-                _shutdownTimer.Start();
-            }
-        }
-        private void CancelShutdownTimer()
-        {
-            _shutdownTimer.Stop();
-            ShutdownWarningVisibility = false;
-            _secondsUntilShutdownInt = 5;
-            SecondsUntilShutdown = "5";
         }
 
         private void SetAudioOutputToSpeaker()
@@ -237,19 +190,6 @@ namespace RPiLCDPiServer.ViewModels
 
         }
 
-        private Task TimedShutdown()
-        {
-            return Task.Run(() =>
-            {
-                _secondsUntilShutdownInt--;
-                SecondsUntilShutdown = _secondsUntilShutdownInt.ToString();
-                if (_secondsUntilShutdownInt==0)
-                {
-                    _shutdownTimer.Stop();
-                    _shutdownService.Shutdown();
-                }
-            });
-        }
         protected override void ProcessUpdate(string message)
         {
             if (!_staticDataReceived)

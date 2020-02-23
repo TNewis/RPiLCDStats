@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Timers;
 using ReactiveUI;
 using RPiLCDPiServer.Enums;
 using RPiLCDPiServer.Services;
@@ -11,12 +12,31 @@ namespace RPiLCDPiServer.ViewModels
     public class MainWindowViewModel : UpdateableViewModelBase
     {
         private readonly IConnectionService _connectionService;
+        private readonly IShutdownService _shutdownService;
         private readonly LogToEventService _loggingService;
         public IReactiveCommand SetTabSummaryCommand { get; set; }
         public IReactiveCommand SetTabCPUCommand { get; set; }
         public IReactiveCommand SetTabGPUCommand { get; set; }
         public IReactiveCommand SetTabConsoleCommand { get; set; }
         public IReactiveCommand SetTabSettingsCommand { get; set; }
+        public IReactiveCommand CancelShutdownCommand { get; set; }
+
+        private Timer _shutdownTimer;
+
+        private bool _shutdownWarningVisibility;
+        public bool ShutdownWarningVisibility
+        {
+            get { return _shutdownWarningVisibility; }
+            set { this.RaiseAndSetIfChanged(ref _shutdownWarningVisibility, value); }
+        }
+
+        private int _secondsUntilShutdownInt;
+        private string _secondsUntilShutdown;
+        public string SecondsUntilShutdown
+        {
+            get { return _secondsUntilShutdown; }
+            set { this.RaiseAndSetIfChanged(ref _secondsUntilShutdown, value); }
+        }
 
         private bool _showingSummaryTab = true;
         public bool ShowingSummaryTab
@@ -86,17 +106,28 @@ namespace RPiLCDPiServer.ViewModels
             SetTabConsoleCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.Console); });
             SetTabSettingsCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.Settings); });
 
+            CancelShutdownCommand = ReactiveCommand.Create(() => { CancelShutdownTimer(); });
+
             ScreenWidth = DisplaySettings.ScreenWidth;
             ScreenWidthWithoutSidebar = DisplaySettings.ScreenWidthWithoutSidebar;
             ScreenHeight = DisplaySettings.ScreenHeight;
             ScreenHeightWithoutButton = DisplaySettings.ScreenHeightWithoutButton;
 
             var serviceSelector = new ServiceSelector();
-            _connectionService = serviceSelector.GetServiceInstance<IConnectionService>();
             _loggingService = (LogToEventService)serviceSelector.GetLoggingService();
+            if (_loggingService != null)
+            {
+                _loggingService.MessageLoggedRecievedEvent += HandleLoggingTriggers;
+            }
 
+            _shutdownService = serviceSelector.GetServiceInstance<IShutdownService>();
+
+            _connectionService = serviceSelector.GetServiceInstance<IConnectionService>();
             ConnectionService.RaiseUpdateRecievedEvent += HandleUpdateRecievedEvent;
             OpenConnection();
+
+            _shutdownTimer = new Timer(1000);
+            _shutdownTimer.Elapsed += async (sender, e) => await TimedShutdown();
         }
 
         public void OpenConnection()
@@ -104,6 +135,39 @@ namespace RPiLCDPiServer.ViewModels
             Task.Run(() =>
             {
                 _connectionService.OpenConnection();
+            });
+        }
+
+        private void HandleLoggingTriggers(object sender, MessageLoggedEventArgs e)
+        {
+            if (e.TriggerType == LogTriggerTypes.ConnectionClosed)
+            {
+                SecondsUntilShutdown = "5";
+                _secondsUntilShutdownInt = 5;
+                ShutdownWarningVisibility = true;
+                _shutdownTimer.Start();
+            }
+        }
+
+        private void CancelShutdownTimer()
+        {
+            _shutdownTimer.Stop();
+            ShutdownWarningVisibility = false;
+            _secondsUntilShutdownInt = 5;
+            SecondsUntilShutdown = "5";
+        }
+
+        private Task TimedShutdown()
+        {
+            return Task.Run(() =>
+            {
+                _secondsUntilShutdownInt--;
+                SecondsUntilShutdown = _secondsUntilShutdownInt.ToString();
+                if (_secondsUntilShutdownInt == 0 && ShutdownWarningVisibility == true)
+                {
+                    _shutdownTimer.Stop();
+                    _shutdownService.Shutdown();
+                }
             });
         }
 

@@ -47,6 +47,11 @@ namespace RPiLCDPiServer.ViewModels
 
         private void ShowLoggedMessageEvent(object sender, MessageLoggedEventArgs a)
         {
+            if (a.MessageLevel == MessageLevel.Trigger)
+            {
+                return;
+            }
+
             _messages.Enqueue(new ConsoleMessage() { message = a.LoggedMessage, level = a.MessageLevel });
             if (_messages.Count > _messageQueueLength)
             {
