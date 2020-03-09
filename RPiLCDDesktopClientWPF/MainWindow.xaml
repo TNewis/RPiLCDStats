@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RPiLCDDesktopClientWPF"
+        xmlns:vm="clr-namespace:RPiLCDDesktopClientWPF.ViewModels"      
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="120" Width="200">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <StackPanel>
+        <TextBlock Text="{Binding LoggedError}"/>
+        <TextBlock Text="{Binding LoggedWarning}"/>
+        <TextBlock Text="{Binding LoggedMessage}"/>
+   </StackPanel>
 </Window>

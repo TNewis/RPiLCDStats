@@ -18,6 +18,7 @@
     <TextBlock Text="{Binding LoggedError}"/>
     <TextBlock Text="{Binding LoggedWarning}"/>
     <TextBlock Text="{Binding LoggedMessage}"/>
+    <Button Command="{Binding ToTrayCommand}" Content="Tray" Width="200" BorderThickness="0" FontSize="24" Foreground="White" Background="#800000" FontFamily="Piboto Condensed, Arial"/>
   </StackPanel>
   
 </Window>
