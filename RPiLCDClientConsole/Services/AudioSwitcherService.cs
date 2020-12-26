@@ -20,6 +20,7 @@ namespace RPiLCDClientConsole.Services
         private AudioDeviceType _currentType = AudioDeviceType.Other;
 
         private int _previousVolume=0;
+        private bool _previouslyMuted = false;
 
         public AudioSwitcherService(ILoggingService loggingService)
         {
@@ -62,6 +63,13 @@ namespace RPiLCDClientConsole.Services
             if (volumeUpdate != null)
             {
                 SetDefaultDeviceVolume(int.Parse(volumeUpdate));
+                _audioUpdateNeeded = true;
+            }
+
+            var muteUpdate = a.UpdateString.Substring(UpdateTags.AudioVolumeMuteTag.TagOpen, UpdateTags.AudioVolumeMuteTag.TagClose);
+            if (muteUpdate != null)
+            {
+                ToggleMute(Boolean.Parse(muteUpdate));
                 _audioUpdateNeeded = true;
             }
         }
@@ -176,6 +184,11 @@ namespace RPiLCDClientConsole.Services
             }
         }
 
+        private void ToggleMute(bool mute)
+        {
+            _controller.DefaultPlaybackDevice.Mute(mute);
+        }
+
         private void SetDeviceOptionDefault(Guid deviceId, bool isDefault)
         {
             _devices.First(d => d.Key.Id == deviceId).Key.IsDefault = isDefault;
@@ -206,19 +219,27 @@ namespace RPiLCDClientConsole.Services
                 _audioUpdateNeeded=true;
             }
 
+            var isMuted = _controller.DefaultPlaybackDevice.IsMuted;
+            if (isMuted!= _previouslyMuted)
+            {
+                _previouslyMuted = isMuted;
+                _audioUpdateNeeded = true;
+            }
+
             if (_audioUpdateNeeded)
             {
                 var volumeString = TagifyString(_controller.DefaultPlaybackDevice.Volume.ToString(), UpdateTags.AudioVolumeTag);
+                var muteString = TagifyString(isMuted.ToString(), UpdateTags.AudioVolumeMuteTag);
 
                 if (_currentType== AudioDeviceType.Headphones)
                 {
                     _audioUpdateNeeded = false;
-                    return String.Format("{0}{1}", volumeString, TagifyString(UpdateTags.AudioHeadphoneTag.TagText, _tabTag));
+                    return String.Format("{0}{1}{2}", volumeString, TagifyString(UpdateTags.AudioHeadphoneTag.TagText, _tabTag), muteString);
                 }
                 if (_currentType == AudioDeviceType.Speaker)
                 {
                     _audioUpdateNeeded = false;
-                    return String.Format("{0}{1}", volumeString, TagifyString(UpdateTags.AudioSpeakerTag.TagText, _tabTag));
+                    return String.Format("{0}{1}{2}", volumeString, TagifyString(UpdateTags.AudioSpeakerTag.TagText, _tabTag), muteString);
                 }
             }
 

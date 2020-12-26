@@ -201,13 +201,13 @@ namespace RPiLCDPiServer.ViewModels
 
         private void MuteAudio()
         {
-            _connectionService.IncludeInResponse(UpdateTags.AudioVolumeTag.TagOpen + "0" + UpdateTags.AudioVolumeTag.TagClose);
+            _connectionService.IncludeInResponse(UpdateTags.AudioVolumeMuteTag.TagOpen + true.ToString() + UpdateTags.AudioVolumeMuteTag.TagClose);
             AudioIsMuted = true;
         }
 
         private void UnmuteAudio()
         {
-            _connectionService.IncludeInResponse(UpdateTags.AudioVolumeTag.TagOpen + _lastNonZeroVolumeInt + UpdateTags.AudioVolumeTag.TagClose);
+            _connectionService.IncludeInResponse(UpdateTags.AudioVolumeMuteTag.TagOpen + false.ToString() + UpdateTags.AudioVolumeMuteTag.TagClose);
             AudioIsMuted = false;
         }
 
@@ -269,17 +269,10 @@ namespace RPiLCDPiServer.ViewModels
 
             }
 
-            var volumeString = message.Substring(UpdateTags.AudioVolumeTag.TagOpen, UpdateTags.AudioVolumeTag.TagClose);
-            if (volumeString != null)
+            var mutedString = message.Substring(UpdateTags.AudioVolumeMuteTag.TagOpen, UpdateTags.AudioVolumeMuteTag.TagClose);
+            if (mutedString != null)
             {
-                if (int.Parse(volumeString) > 0)
-                {
-                    AudioIsMuted = false;
-                }
-                else
-                {
-                    AudioIsMuted = true;
-                }
+                AudioIsMuted = Boolean.Parse(mutedString);
             }
         }
 
