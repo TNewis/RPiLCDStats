@@ -12,11 +12,13 @@
       <SubType>Designer</SubType>
     </AvaloniaResource>
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Remove="Views\AudioTabView.xaml" />
     <AvaloniaResource Remove="Views\ConsoleTabView.xaml" />
     <AvaloniaResource Remove="Views\CPUTabView.xaml" />
     <AvaloniaResource Remove="Views\GPUTabView.xaml" />
     <AvaloniaResource Remove="Views\SummaryTabView.xaml" />
     <Folder Include="Models\" />
+    <None Remove="Views\AudioTabView.xaml" />
     <None Remove="Views\ConsoleTabView.xaml" />
     <None Remove="Views\CPUTabView.xaml" />
     <None Remove="Views\GPUTabView.xaml" />
@@ -50,6 +52,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\AudioTabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\RPiShared\RPiShared.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -77,8 +84,14 @@
     <None Update="Assets\UIImages\ButtonHeadphone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\UIImages\ButtonMuted.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\UIImages\ButtonPower.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\UIImages\ButtonRestart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\UIImages\ButtonSettings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -94,6 +107,9 @@
     </None>
     <None Update="Assets\UIImages\ButtonSummarySelected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\UIImages\ButtonUnmuted.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\UIImages\TestButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

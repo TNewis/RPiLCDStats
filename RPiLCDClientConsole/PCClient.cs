@@ -27,6 +27,7 @@ namespace RPiLCDClientConsole
 
         private static Socket _clientSocket;
 
+        private static bool _connectionSuccess = false;
         private static bool _connecting = false;
         private static int _connectingWait = 0;
 
@@ -64,45 +65,51 @@ namespace RPiLCDClientConsole
 
         private static void StartClient()
         {
-            if (_connecting && _connectingWait < 10)
+            while (!_connectionSuccess)
             {
-                _loggingService.LogMessage(".");
-                _connectingWait++;
-                return;
-            }
-            else if (!(_clientSocket == null))
-            {
-                if (_clientSocket.Connected)
+                if (_connecting && _connectingWait < 10)
                 {
-                    _loggingService.LogWarning("Connection already exists. Aborting new connection attempt.");
+                    _loggingService.LogMessage(".");
+                    _connectingWait++;
                     return;
                 }
-
-            }
-
-            _connectingWait = 0;
-            _connecting = true;
-            try
-            {
-                IPAddress ipAddress = IPAddress.Parse("192.168.0.21");
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
-
-                if (_clientSocket == null)
+                else if (!(_clientSocket == null))
                 {
-                    _clientSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    if (_clientSocket.Connected)
+                    {
+                        _loggingService.LogWarning("Connection already exists. Aborting new connection attempt.");
+                        _connectionSuccess = true;
+                        return;
+                    }
+
                 }
 
-                _clientSocket.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), _clientSocket);
+                _connectingWait = 0;
+                _connecting = true;
+                try
+                {
+                    IPAddress ipAddress = IPAddress.Parse("192.168.0.10");
+                    IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
-                _connectDone.WaitOne();
-            }
-            catch (Exception e)
-            {
-                _loggingService.LogError(e.ToString());
-            }
-            finally
-            {
-                _connecting = false;
+                    if (_clientSocket == null)
+                    {
+                        _clientSocket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    }
+
+                    _clientSocket.BeginConnect(remoteEP, new AsyncCallback(ConnectCallback), _clientSocket);
+                    _connectDone.WaitOne();
+
+                    _connectionSuccess = true;
+                }
+                catch (Exception e)
+                {
+                    _connectionSuccess = false;
+                    _loggingService.LogError(e.ToString());
+                }
+                finally
+                {
+                    _connecting = false;
+                }
             }
         }
 
@@ -117,7 +124,7 @@ namespace RPiLCDClientConsole
                 var m2Time = DateTime.Now;
 
                 Receive(_clientSocket);
-                var m3Time=DateTime.Now;
+                var m3Time = DateTime.Now;
                 _receiveDone.WaitOne();
             }
             catch (Exception e)
@@ -134,7 +141,7 @@ namespace RPiLCDClientConsole
 
                 client.EndConnect(ar);
 
-                _loggingService.LogMessage(("Socket connected to "+ client.RemoteEndPoint.ToString()));
+                _loggingService.LogMessage(("Socket connected to " + client.RemoteEndPoint.ToString()));
 
                 _connectDone.Set();
             }
@@ -260,7 +267,7 @@ namespace RPiLCDClientConsole
             {
                 Socket client = (Socket)ar.AsyncState;
                 int bytesSent = client.EndSend(ar);
-                _loggingService.LogMessage("Sent "+ bytesSent +" bytes to server.");
+                _loggingService.LogMessage("Sent " + bytesSent + " bytes to server.");
                 _sendDone.Set();
             }
             catch (Exception e)

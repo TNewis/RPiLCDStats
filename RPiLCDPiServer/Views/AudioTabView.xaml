@@ -1,0 +1,76 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:RPiLCDPiServer.ViewModels;assembly=RPiLCDPiServer"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RPiLCDPiServer.Views.AudioTabView"
+             xmlns:converters="clr-namespace:RPiLCDPiServer.Converters;assembly=RPiLCDPiServer"
+             xmlns:clr="clr-namespace:System;assembly=mscorlib">
+
+  <UserControl.DataContext>
+    <vm:AudioTabViewModel/>
+  </UserControl.DataContext>
+
+  <UserControl.Resources>
+    <clr:String x:Key="headphoneIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonHeadphone.png</clr:String>
+    <clr:String x:Key="speakerIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonSpeaker.png</clr:String>
+    <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
+  </UserControl.Resources>
+
+  <StackPanel VerticalAlignment="Center">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="128"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="200"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <StackPanel Grid.Column="2" Grid.Row="0">
+        <Grid>
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding SetSpeakerAudioCommand}" IsVisible="{Binding !CurrentAudioIsSpeaker}" IsEnabled="{Binding !AudioSwapButtonDisabled}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource headphoneIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding SetHeadphoneAudioCommand}" IsVisible="{Binding CurrentAudioIsSpeaker}" IsEnabled="{Binding !AudioSwapButtonDisabled}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource speakerIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+        </Grid>
+
+        <Grid>
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding MuteAudioCommand}" IsVisible="{Binding !AudioIsMuted}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource headphoneIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding UnmuteAudioCommand}" IsVisible="{Binding AudioIsMuted}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource speakerIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+        </Grid>
+      </StackPanel>
+      
+    </Grid>
+  </StackPanel>
+  
+</UserControl>

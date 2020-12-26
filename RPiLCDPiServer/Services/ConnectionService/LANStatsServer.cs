@@ -54,7 +54,7 @@ namespace RPiLCDPiServer.Services.ConnectionService
 
         public static void StartListening()
         {
-            IPAddress ipAddress = IPAddress.Parse("192.168.0.21");
+            IPAddress ipAddress = IPAddress.Parse("192.168.0.10");
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 13202);
 
             _listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

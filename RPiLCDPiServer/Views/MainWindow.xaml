@@ -9,7 +9,6 @@
         xmlns:clr="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d" d:DesignWidth="790" d:DesignHeight="470"
         x:Class="RPiLCDPiServer.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
         Title="RPiLCDPiServer" Width="790" Height="470" Background="Black">
 
   <Design.DataContext>
@@ -18,23 +17,24 @@
 
   <Window.Resources>
     <!--LCDStatsApp/Assets/UIImages/ButtonGPU.png-->
-    <clr:String x:Key="gpuIcon">LCDStatsApp/Assets/UIImages/ButtonGPU.png</clr:String>
-    <clr:String x:Key="gpuSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonGPUSelected.png</clr:String>
+    <clr:String x:Key="gpuIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonGPU.png</clr:String>
+    <clr:String x:Key="gpuSelectedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonGPUSelected.png</clr:String>
 
-    <clr:String x:Key="cpuIcon">LCDStatsApp/Assets/UIImages/ButtonCPU.png</clr:String>
-    <clr:String x:Key="cpuSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonCPUSelected.png</clr:String>
+    <clr:String x:Key="cpuIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonCPU.png</clr:String>
+    <clr:String x:Key="cpuSelectedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonCPUSelected.png</clr:String>
 
-    <clr:String x:Key="summaryIcon">LCDStatsApp/Assets/UIImages/ButtonSummary.png</clr:String>
-    <clr:String x:Key="summarySelectedIcon">LCDStatsApp/Assets/UIImages/ButtonSummarySelected.png</clr:String>
+    <clr:String x:Key="summaryIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonSummary.png</clr:String>
+    <clr:String x:Key="summarySelectedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonSummarySelected.png</clr:String>
 
-    <clr:String x:Key="settingsIcon">LCDStatsApp/Assets/UIImages/ButtonSettings.png</clr:String>
-    <clr:String x:Key="settingsSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonSettingsSelected.png</clr:String>
+    <clr:String x:Key="settingsIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonSettings.png</clr:String>
+    <clr:String x:Key="settingsSelectedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonSettingsSelected.png</clr:String>
 
-    <clr:String x:Key="consoleIcon">LCDStatsApp/Assets/UIImages/ButtonConsole.png</clr:String>
-    <clr:String x:Key="consoleSelectedIcon">LCDStatsApp/Assets/UIImages/ButtonConsoleSelected.png</clr:String>
+    <clr:String x:Key="consoleIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonConsole.png</clr:String>
+    <clr:String x:Key="consoleSelectedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonConsoleSelected.png</clr:String>
 
-    <clr:String x:Key="exitIcon">LCDStatsApp/Assets/UIImages/ButtonExit.png</clr:String>
-    <clr:String x:Key="powerIcon">LCDStatsApp/Assets/UIImages/ButtonPower.png</clr:String>
+    <clr:String x:Key="exitIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonExit.png</clr:String>
+    <clr:String x:Key="powerIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonPower.png</clr:String>
+    <clr:String x:Key="restartIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonRestart.png</clr:String>
     
     <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
   </Window.Resources>
@@ -70,8 +70,8 @@
           </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="64" Width="64" >
-          <Image Source="{Binding Source={StaticResource cpuSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}"  IsVisible="{Binding ShowingCPUTab}"/>
-          <Button VerticalAlignment="Center" Height="64" Width="64" Command="{Binding SetTabCPUCommand}" IsVisible="{Binding !ShowingCPUTab}" Padding="0">
+          <Image Source="{Binding Source={StaticResource cpuSelectedIcon}, Converter={StaticResource pathToBitmapConverter}}"  IsVisible="{Binding ShowingAudioTab}"/>
+          <Button VerticalAlignment="Center" Height="64" Width="64" Command="{Binding SetTabAudioCommand}" IsVisible="{Binding !ShowingAudioTab}" Padding="0">
             <Button.Template>
               <ControlTemplate>
                 <Image Source="{Binding Source={StaticResource cpuIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
@@ -118,8 +118,8 @@
       </DockPanel>
     </Grid>
 
-    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingCPUTab}">
-
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingAudioTab}">
+      <views:AudioTabView/>
     </DockPanel>
 
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{Binding ScreenWidthWithoutSidebar}" Height="{Binding ScreenHeight}" IsVisible="{Binding ShowingGPUTab}">
@@ -154,6 +154,13 @@
           <Button.Template>
             <ControlTemplate>
               <Image Source="{Binding Source={StaticResource exitIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+            </ControlTemplate>
+          </Button.Template>
+        </Button>
+        <Button DockPanel.Dock="Right" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="64" Width="64" Command="{Binding RestartCommand}" Padding="0">
+          <Button.Template>
+            <ControlTemplate>
+              <Image Source="{Binding Source={StaticResource restartIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
             </ControlTemplate>
           </Button.Template>
         </Button>

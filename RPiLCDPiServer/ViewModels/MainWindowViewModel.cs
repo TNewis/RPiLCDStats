@@ -15,6 +15,7 @@ namespace RPiLCDPiServer.ViewModels
         private readonly IShutdownService _shutdownService;
         private readonly LogToEventService _loggingService;
         public IReactiveCommand SetTabSummaryCommand { get; set; }
+        public IReactiveCommand SetTabAudioCommand { get; set; }
         public IReactiveCommand SetTabCPUCommand { get; set; }
         public IReactiveCommand SetTabGPUCommand { get; set; }
         public IReactiveCommand SetTabConsoleCommand { get; set; }
@@ -43,6 +44,13 @@ namespace RPiLCDPiServer.ViewModels
         {
             get { return _showingSummaryTab; }
             set { this.RaiseAndSetIfChanged(ref _showingSummaryTab, value); }
+        }
+
+        private bool _showingAudioTab = false;
+        public bool ShowingAudioTab
+        {
+            get { return _showingAudioTab; }
+            set { this.RaiseAndSetIfChanged(ref _showingAudioTab, value); }
         }
 
         private bool _showingCPUTab = false;
@@ -101,6 +109,7 @@ namespace RPiLCDPiServer.ViewModels
         public MainWindowViewModel()
         {
             SetTabSummaryCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.Summary); });
+            SetTabAudioCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.Audio); });
             SetTabCPUCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.CPU); });
             SetTabGPUCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.GPU); });
             SetTabConsoleCommand = ReactiveCommand.Create(() => { SelectTabAndHideOthers(CurrentTab.Console); });
@@ -178,6 +187,15 @@ namespace RPiLCDPiServer.ViewModels
                 case CurrentTab.Summary:
                     ShowingSettingsTab = false;
                     ShowingSummaryTab = true;
+                    ShowingAudioTab = false;
+                    ShowingCPUTab = false;
+                    ShowingGPUTab = false;
+                    ShowingConsoleTab = false;
+                    break;
+                case CurrentTab.Audio:
+                    ShowingSettingsTab = false;
+                    ShowingSummaryTab = false;
+                    ShowingAudioTab = true;
                     ShowingCPUTab = false;
                     ShowingGPUTab = false;
                     ShowingConsoleTab = false;
@@ -185,6 +203,7 @@ namespace RPiLCDPiServer.ViewModels
                 case CurrentTab.CPU:
                     ShowingSettingsTab = false;
                     ShowingSummaryTab = false;
+                    ShowingAudioTab = false;
                     ShowingCPUTab = true;
                     ShowingGPUTab = false;
                     ShowingConsoleTab = false;
@@ -192,6 +211,7 @@ namespace RPiLCDPiServer.ViewModels
                 case CurrentTab.GPU:
                     ShowingSettingsTab = false;
                     ShowingSummaryTab = false;
+                    ShowingAudioTab = false;
                     ShowingCPUTab = false;
                     ShowingGPUTab = true;
                     ShowingConsoleTab = false;
@@ -199,6 +219,7 @@ namespace RPiLCDPiServer.ViewModels
                 case CurrentTab.Settings:
                     ShowingSettingsTab = true;
                     ShowingSummaryTab = false;
+                    ShowingAudioTab = false;
                     ShowingCPUTab = false;
                     ShowingGPUTab = false;
                     ShowingConsoleTab = false;
@@ -206,6 +227,7 @@ namespace RPiLCDPiServer.ViewModels
                 case CurrentTab.Console:
                     ShowingSettingsTab = false;
                     ShowingSummaryTab = false;
+                    ShowingAudioTab = false;
                     ShowingCPUTab = false;
                     ShowingGPUTab = false;
                     ShowingConsoleTab = true;

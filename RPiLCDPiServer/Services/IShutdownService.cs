@@ -5,5 +5,6 @@ namespace RPiLCDPiServer.Services
     public interface IShutdownService: IService
     {
         void Shutdown();
+        void Restart();
     }
 }

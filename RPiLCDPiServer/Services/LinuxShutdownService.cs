@@ -17,5 +17,13 @@ namespace RPiLCDPiServer.Services
             process.StartInfo.Arguments = "/sbin/shutdown -h now";
             process.Start();
         }
+
+        public void Restart()
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = "/usr/bin/sudo";
+            process.StartInfo.Arguments = "/sbin/shutdown -r now";
+            process.Start();
+        }
     }
 }

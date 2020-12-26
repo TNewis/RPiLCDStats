@@ -13,6 +13,8 @@ namespace RPiLCDPiServer.ViewModels
     {
         public IReactiveCommand SetSpeakerAudioCommand { get; set; }
         public IReactiveCommand SetHeadphoneAudioCommand { get; set; }
+        public IReactiveCommand MuteAudioCommand { get; set; }
+        public IReactiveCommand UnmuteAudioCommand { get; set; }
 
         private readonly IConnectionService _connectionService;
         public string FontSans { get; set; }
@@ -20,6 +22,22 @@ namespace RPiLCDPiServer.ViewModels
         public int ScreenWidthWithoutSidebar { get; set; }
         public int ScreenHeight { get; set; }
         public int ScreenHeightWithoutButton { get; set; }
+
+        private int _volumeInt;
+        private int _lastNonZeroVolumeInt;
+        private string _volume;
+        public string Volume
+        {
+            get { return _volume; }
+            set { this.RaiseAndSetIfChanged(ref _volume, value); }
+        }
+
+        private bool _audioIsMuted;
+        public bool AudioIsMuted
+        {
+            get { return _audioIsMuted; }
+            set { this.RaiseAndSetIfChanged(ref _audioIsMuted, value); }
+        }
 
         private string _temperatureUnitString;
 
@@ -151,7 +169,8 @@ namespace RPiLCDPiServer.ViewModels
         {
             SetSpeakerAudioCommand = ReactiveCommand.Create(() => { SetAudioOutputToSpeaker(); });
             SetHeadphoneAudioCommand = ReactiveCommand.Create(() => { SetAudioOutputToHeadphone(); });
-
+            MuteAudioCommand = ReactiveCommand.Create(() => { MuteAudio(); });
+            UnmuteAudioCommand = ReactiveCommand.Create(() => { UnmuteAudio(); });
 
             ScreenWidth = DisplaySettings.ScreenWidth;
             ScreenWidthWithoutSidebar = DisplaySettings.ScreenWidthWithoutSidebar;
@@ -178,6 +197,18 @@ namespace RPiLCDPiServer.ViewModels
         {
             _connectionService.IncludeInResponse(UpdateTags.AudioDeviceTag.TagOpen + UpdateTags.AudioHeadphoneTag.TagText + UpdateTags.AudioDeviceTag.TagClose);
             AudioSwapButtonDisabled = true;
+        }
+
+        private void MuteAudio()
+        {
+            _connectionService.IncludeInResponse(UpdateTags.AudioVolumeTag.TagOpen + "0" + UpdateTags.AudioVolumeTag.TagClose);
+            AudioIsMuted = true;
+        }
+
+        private void UnmuteAudio()
+        {
+            _connectionService.IncludeInResponse(UpdateTags.AudioVolumeTag.TagOpen + _lastNonZeroVolumeInt + UpdateTags.AudioVolumeTag.TagClose);
+            AudioIsMuted = false;
         }
 
         private Task ClockUpdate()
@@ -236,6 +267,19 @@ namespace RPiLCDPiServer.ViewModels
                     }
                 }
 
+            }
+
+            var volumeString = message.Substring(UpdateTags.AudioVolumeTag.TagOpen, UpdateTags.AudioVolumeTag.TagClose);
+            if (volumeString != null)
+            {
+                if (int.Parse(volumeString) > 0)
+                {
+                    AudioIsMuted = false;
+                }
+                else
+                {
+                    AudioIsMuted = true;
+                }
             }
         }
 

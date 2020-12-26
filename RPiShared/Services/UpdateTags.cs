@@ -7,6 +7,7 @@
         public static Tag AudioDeviceTag = new Tag("Audio");
         public static Tag AudioSpeakerTag = new Tag("Speaker");
         public static Tag AudioHeadphoneTag = new Tag("Headphone");
+        public static Tag AudioVolumeTag = new Tag("Volume");
 
         public static Tag ClockTabTag = new Tag("CLOCKTab");
         public static Tag ClockTag = new Tag("CLOCK");

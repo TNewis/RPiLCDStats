@@ -19,6 +19,8 @@ namespace RPiLCDClientConsole.Services
         private bool _audioUpdateNeeded = true;
         private AudioDeviceType _currentType = AudioDeviceType.Other;
 
+        private int _previousVolume=0;
+
         public AudioSwitcherService(ILoggingService loggingService)
         {
             _loggingService = loggingService;
@@ -47,8 +49,21 @@ namespace RPiLCDClientConsole.Services
                     SelectDefaultSpeaker();
                     _audioUpdateNeeded = true;
                 }
+
+                if (audioUpdate.Contains(UpdateTags.AudioVolumeTag.TagOpen))
+                {
+                    var newVolume = audioUpdate.Substring(UpdateTags.AudioVolumeTag.TagOpen, UpdateTags.AudioVolumeTag.TagClose);
+                    SetDefaultDeviceVolume(int.Parse(newVolume));
+                    _audioUpdateNeeded = true;
+                }
             }
 
+            var volumeUpdate = a.UpdateString.Substring(UpdateTags.AudioVolumeTag.TagOpen, UpdateTags.AudioVolumeTag.TagClose);
+            if (volumeUpdate != null)
+            {
+                SetDefaultDeviceVolume(int.Parse(volumeUpdate));
+                _audioUpdateNeeded = true;
+            }
         }
 
         private void UpdateSavedDevices()
@@ -145,6 +160,22 @@ namespace RPiLCDClientConsole.Services
             device.SetAsDefaultAsync();
         }
 
+        private void SetDefaultDeviceVolume(int volume)
+        {     
+            if(volume == 0)
+            {
+                _controller.DefaultPlaybackDevice.Mute(true);
+            }
+            else
+            {
+                if (_controller.DefaultPlaybackDevice.IsMuted)
+                {
+                    _controller.DefaultPlaybackDevice.Mute(false);
+                }
+                _controller.DefaultPlaybackDevice.Volume = volume;
+            }
+        }
+
         private void SetDeviceOptionDefault(Guid deviceId, bool isDefault)
         {
             _devices.First(d => d.Key.Id == deviceId).Key.IsDefault = isDefault;
@@ -168,17 +199,26 @@ namespace RPiLCDClientConsole.Services
 
         public string GetUpdateString()
         {
+            var audioVolume = (int)_controller.DefaultPlaybackDevice.Volume;
+            if (audioVolume!= _previousVolume)
+            {
+                _previousVolume = audioVolume;
+                _audioUpdateNeeded=true;
+            }
+
             if (_audioUpdateNeeded)
             {
-                if(_currentType== AudioDeviceType.Headphones)
+                var volumeString = TagifyString(_controller.DefaultPlaybackDevice.Volume.ToString(), UpdateTags.AudioVolumeTag);
+
+                if (_currentType== AudioDeviceType.Headphones)
                 {
                     _audioUpdateNeeded = false;
-                    return TagifyString(UpdateTags.AudioHeadphoneTag.TagText, _tabTag);
+                    return String.Format("{0}{1}", volumeString, TagifyString(UpdateTags.AudioHeadphoneTag.TagText, _tabTag));
                 }
                 if (_currentType == AudioDeviceType.Speaker)
                 {
                     _audioUpdateNeeded = false;
-                    return TagifyString(UpdateTags.AudioSpeakerTag.TagText, _tabTag);
+                    return String.Format("{0}{1}", volumeString, TagifyString(UpdateTags.AudioSpeakerTag.TagText, _tabTag));
                 }
             }
 
@@ -196,11 +236,19 @@ namespace RPiLCDClientConsole.Services
 
         public string GetStaticData()
         {
+            var volumeString= TagifyString(_controller.DefaultPlaybackDevice.Volume.ToString(), UpdateTags.AudioVolumeTag);
+            string deviceString;
+
             if(_currentType== AudioDeviceType.Headphones)
             {
-                return TagifyString(UpdateTags.AudioHeadphoneTag.TagText, UpdateTags.AudioDeviceTag);
+                deviceString= TagifyString(UpdateTags.AudioHeadphoneTag.TagText, UpdateTags.AudioDeviceTag);
             }
-            return TagifyString(UpdateTags.AudioSpeakerTag.TagText, UpdateTags.AudioDeviceTag);
+            else
+            {
+                deviceString= TagifyString(UpdateTags.AudioSpeakerTag.TagText, UpdateTags.AudioDeviceTag);
+            }
+
+            return String.Format("{0}{1}", volumeString, deviceString);
         }
     }
 

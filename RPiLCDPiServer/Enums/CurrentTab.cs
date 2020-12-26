@@ -7,6 +7,7 @@ namespace RPiLCDPiServer.Enums
     public enum CurrentTab
     {
         Settings,
+        Audio,
         Summary,
         GPU,
         CPU,

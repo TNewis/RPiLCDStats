@@ -13,8 +13,10 @@
   </UserControl.DataContext>
 
   <UserControl.Resources>
-    <clr:String x:Key="headphoneIcon">LCDStatsApp/Assets/UIImages/ButtonHeadphone.png</clr:String>
-    <clr:String x:Key="speakerIcon">LCDStatsApp/Assets/UIImages/ButtonSpeaker.png</clr:String>
+    <clr:String x:Key="headphoneIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonHeadphone.png</clr:String>
+    <clr:String x:Key="speakerIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonSpeaker.png</clr:String>
+    <clr:String x:Key="mutedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonMuted.png</clr:String>
+    <clr:String x:Key="unmutedIcon">home/pi/LCDStatsApp/Assets/UIImages/ButtonUnmuted.png</clr:String>
     <converters:PathToBitmapConverter x:Key="pathToBitmapConverter"/>
   </UserControl.Resources>
 
@@ -22,7 +24,7 @@
     <TextBlock Text="{Binding TimeString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="72" FontFamily="Piboto Condensed, Arial"/>
     <TextBlock Text="{Binding DateString}" Foreground="#800000" HorizontalAlignment="Center" FontSize="24" FontFamily="Piboto Condensed, Arial"/>
 
-    <Grid RowDefinitions="*" IsVisible="{Binding !ShutdownWarningVisibility}">
+    <Grid RowDefinitions="*">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="*"/>
@@ -157,6 +159,26 @@
           </Button>
 
         </Grid>
+
+        <Grid>
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding MuteAudioCommand}" IsVisible="{Binding !AudioIsMuted}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource unmutedIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+          <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="64" Width="64" Command="{Binding UnmuteAudioCommand}" IsVisible="{Binding AudioIsMuted}" Padding="0">
+            <Button.Template>
+              <ControlTemplate>
+                <Image Source="{Binding Source={StaticResource mutedIcon}, Converter={StaticResource pathToBitmapConverter}}"/>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+
+        </Grid>
+        
       </StackPanel>
 
       <StackPanel Grid.Column="0" Grid.Row="1">

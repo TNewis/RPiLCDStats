@@ -14,6 +14,7 @@ namespace RPiLCDPiServer.ViewModels
 
         public IReactiveCommand ShutdownCommand { get; set; }
         public IReactiveCommand ExitToOSCommand { get; set; }
+        public IReactiveCommand RestartCommand { get; set; }
         public IReactiveCommand SetBrightnessCommand { get; set; }
 
         public int ScreenWidth { get; set; }
@@ -37,6 +38,7 @@ namespace RPiLCDPiServer.ViewModels
             _displayControlService = serviceSelector.GetServiceInstance<IDisplayControlService>();
 
             ShutdownCommand = ReactiveCommand.Create(() => { _shutdownService.Shutdown(); });
+            RestartCommand = ReactiveCommand.Create(() => { _shutdownService.Restart(); });
             ExitToOSCommand = ReactiveCommand.Create(() => { Environment.Exit(0); });
 
             ScreenWidth = DisplaySettings.ScreenWidth;
