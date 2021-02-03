@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAudioDeviceOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AudioDeviceOptions>
+    <Name>NVIDIA Output</Name>
+    <Id>086f5f5f-9579-4ea7-b458-f64b29b3f475</Id>
+    <IsDefault>false</IsDefault>
+    <Type>Speaker</Type>
+  </AudioDeviceOptions>
+  <AudioDeviceOptions>
+    <Name>Speakers</Name>
+    <Id>108256d1-d9cf-4e45-92d5-a7598b3cff2f</Id>
+    <IsDefault>false</IsDefault>
+    <Type>Speaker</Type>
+  </AudioDeviceOptions>
+  <AudioDeviceOptions>
+    <Name>Digital Audio (S/PDIF)</Name>
+    <Id>2b37605f-1c6e-4798-a59d-007fe66caa27</Id>
+    <IsDefault>false</IsDefault>
+    <Type>Other</Type>
+  </AudioDeviceOptions>
+  <AudioDeviceOptions>
+    <Name>Headset Earphone</Name>
+    <Id>6b11d586-2260-445e-b65f-9cb357dc5417</Id>
+    <IsDefault>false</IsDefault>
+    <Type>Headphones</Type>
+  </AudioDeviceOptions>
+  <AudioDeviceOptions>
+    <Name>34GK950F</Name>
+    <Id>7cbca72c-ee0f-4a3e-9fc0-4bd1effdbbed</Id>
+    <IsDefault>false</IsDefault>
+    <Type>Speaker</Type>
+  </AudioDeviceOptions>
+  <AudioDeviceOptions>
+    <Name>Headphones</Name>
+    <Id>86895cea-9ce1-495d-9301-36512d46c042</Id>
+    <IsDefault>false</IsDefault>
+    <Type>Headphones</Type>
+  </AudioDeviceOptions>
+  <AudioDeviceOptions>
+    <Name>BenQ GL2250H</Name>
+    <Id>96bebaa3-262f-43b5-9508-6b701c75cb3c</Id>
+    <IsDefault>true</IsDefault>
+    <Type>Speaker</Type>
+  </AudioDeviceOptions>
+</ArrayOfAudioDeviceOptions>

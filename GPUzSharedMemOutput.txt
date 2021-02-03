@@ -93,3 +93,102 @@
 [11]CPU Temperature: 40 °C
 [12]System Memory Used: 4009.1484375 MB
 
+
+2021 780Ti
+ListAllSensors
+[0]GPU Clock: 810 MHz
+[1]Memory Clock: 1749.591 MHz
+[2]GPU Temperature: 44 °C
+[3]Fan Speed (%): 28 %%
+[4]Fan Speed (RPM): 1179 RPM
+[5]Memory Used: 2012.87890625 MB
+[6]GPU Load: 7 %%
+[7]Memory Controller Load: 2 %%
+[8]Video Engine Load: 16 %%
+[9]Bus Interface Load: 5 %%
+[10]Power Consumption (W): 79.91 W
+[11]Power Consumption (%): 31.964 %% TDP
+[12]PerfCap Reason: 16 
+[13]VDDC: 0.95 V
+
+ListAllData
+[0]BIOSUEFI: 1
+[1]BIOSVersion: 80.80.34.00.80
+[2]Bus: 7
+[3]BusInterface: PCIe x16 3.0 @ x16 3.0
+[4]CUDA: 1
+[5]CUDA_Capability: 3.5
+[6]CardName: NVIDIA GeForce GTX 780 Ti
+[7]ClockGPU: 980
+[8]ClockGPUBase: 980
+[9]ClockGPUBaseDefault: 980
+[10]ClockGPUBoost: 1046
+[11]ClockGPUBoostDefault: 1046
+[12]ClockGPUDefault: 980
+[13]ClockMem: 1750
+[14]ClockMemDefault: 1750
+[15]ClockShader: 
+[16]ClockShaderDefault: 
+[17]DXCompute: 1
+[18]DXCompute_Capability: 5.0
+[19]DXR: 0
+[20]Dev: 0
+[21]DeviceID: 100A
+[22]DieSize: 561
+[23]DirectML: 0
+[24]DirectXSupport: 12 (11_0)
+[25]DriverDate: Dec 31, 2020
+[26]DriverVersion: 27.21.14.6109 (NVIDIA 461.09) DCH / Win10 64
+[27]FillratePixel: 50.2
+[28]FillrateTexel: 251.0
+[29]Fn: 0
+[30]GPUName: GK110
+[31]GPURevision: B1
+[32]HasBoostClocks: 1
+[33]MemBandwidth: 336.0
+[34]MemBusWidth: 384
+[35]MemSize: 3072
+[36]MemSizeForDisplay: 3072 MB
+[37]MemType: GDDR5
+[38]MemVendor: Hynix
+[39]Monitor 1\AspectRatio: 17:9
+[40]Monitor 1\DPMSSupport: Standby
+[41]Monitor 1\DisplayDiagonal: 34.1"
+[42]Monitor 1\DisplayHeight: 33
+[43]Monitor 1\DisplayWidth: 80
+[44]Monitor 1\Gamma: 2.20
+[45]Monitor 1\HRefreshMax: 225
+[46]Monitor 1\HRefreshMin: 30
+[47]Monitor 1\Manufactured: Week 11 / 2019
+[48]Monitor 1\MaxResX: 3440
+[49]Monitor 1\MaxResY: 1440
+[50]Monitor 1\Model:  34GK950F  (GSM7727)
+[51]Monitor 1\Serial: 275999
+[52]Monitor 1\Type: DisplayPort
+[53]Monitor 1\VRefreshMax: 144
+[54]Monitor 1\VRefreshMin: 60
+[55]MonitorCount: 1
+[56]MultiGPU0: Disabled 
+[57]MultiGPUName: NVIDIA SLI
+[58]NumROPs: 48
+[59]NumShadersPixel: 
+[60]NumShadersUnified: 2880
+[61]NumShadersVertex: 
+[62]NumTMUs: 240
+[63]OpenCL: 1
+[64]OpenCL_Profile: Full
+[65]OpenCL_Version: OpenCL 1.2 CUDA
+[66]OpenGL: 1
+[67]OpenGL_Version: 4.6
+[68]PhysX: 1
+[69]ProcessSize: 28
+[70]ReleaseDate: Nov 7, 2013
+[71]SubsysID: 2883
+[72]Subvendor: EVGA
+[73]SubvendorID: 3842
+[74]Transistors: 7100
+[75]Vendor: NVIDIA
+[76]VendorID: 10DE
+[77]Vulkan: 1
+[78]Vulkan_Version: 1.2.155
+[79]WHQL: WHQL

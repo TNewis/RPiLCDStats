@@ -125,5 +125,59 @@ namespace RPiLCDClientConsole.Libraries
 
             return res;
         }
+
+        //Extended by Tom Newis
+        public int CountSensors()
+        {
+            String s = String.Empty;
+            int count=0;
+
+            for (int i = 0; (s = SensorName(i)) != String.Empty; i++)
+            {
+                count++;
+            }
+                
+
+            return count;
+        }
+
+        public int CountData()
+        {
+            String s = String.Empty;
+            int count = 0;
+
+            for (int i = 0; (s = DataKey(i)) != String.Empty; i++)
+            {
+                count++;
+            }
+
+
+            return count;
+        }
+
+        public string[] ListSensorNames()
+        {
+            var names = new string[CountSensors()];
+
+            for(int i = 0; i < names.Length; i++)
+            {
+                names[i] = SensorName(i);
+            }
+
+            return names;
+;       }
+
+        public string[] ListDataNames()
+        {
+            var names = new string[CountData()];
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                names[i] = DataKey(i);
+            }
+
+            return names;
+            ;
+        }
     }
 }

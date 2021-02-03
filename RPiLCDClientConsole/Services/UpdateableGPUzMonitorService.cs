@@ -1,6 +1,8 @@
 ﻿using RPiLCDClientConsole.Libraries;
 using System;
 using RPiLCDShared.Services;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace RPiLCDClientConsole.Services
 {
@@ -11,6 +13,18 @@ namespace RPiLCDClientConsole.Services
 
         private readonly GPUzWrapper _gpuz;
         private bool _gpuzMemoryOpen;
+
+        private const string gpuLoadSensorName = "GPU Load";
+        private const string gpuMemorySensorName = "Memory Used";
+        private const string gpuMemoryTotalDataName = "MemSize";
+        //private const string pcMemorySensorName = "";//this sensor is missing, will have to add a new service, possibly using psapi.dll
+        private const string gpuTempSensorName = "GPU Temperature";
+        //private const string cpuTempSensorName = "";
+
+        private int gpuLoadSensorIndex;
+        private int gpuMemorySensorIndex;
+        private int gpuMemoryTotalDataIndex;
+        private int gpuTempSensorIndex;
 
         public UpdatableGPUzMonitorService(ILoggingService loggingService)
         {
@@ -42,7 +56,6 @@ namespace RPiLCDClientConsole.Services
                     + TagifyString(gpuTemperature.ToString(), UpdateTags.GPUTemperatureTag)
                     + TagifyString(cpuTemperature.ToString(), UpdateTags.CPUTemperatureTag);
 
-
                 return updateMessage;
             }
             catch (Exception e)
@@ -57,10 +70,32 @@ namespace RPiLCDClientConsole.Services
         {
             if (_gpuzMemoryOpen == false)
             {
-                _gpuz.Open();
+                try
+                {
+                    _gpuz.Open();
+                }
+                catch(Exception ex)
+                {
+                    _loggingService.LogError("Error opening GPUz shared memory.");
+                }
+
+
+                SetSensorIndexes();
+
                 _gpuzMemoryOpen = true;
             }
         }
+
+        private void SetSensorIndexes()
+        {
+            List<string> sensorNames = _gpuz.ListSensorNames().ToList();
+            List<string> dataNames = _gpuz.ListDataNames().ToList();
+
+            gpuLoadSensorIndex = sensorNames.IndexOf(gpuLoadSensorName);
+            gpuMemorySensorIndex = sensorNames.IndexOf(gpuMemorySensorName);
+            gpuMemoryTotalDataIndex = dataNames.IndexOf(gpuMemoryTotalDataName);
+            gpuTempSensorIndex = sensorNames.IndexOf(gpuTempSensorName);
+    }
 
         public void EndService()
         {

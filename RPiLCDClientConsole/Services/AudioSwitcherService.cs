@@ -82,9 +82,9 @@ namespace RPiLCDClientConsole.Services
 
             foreach (CoreAudioDevice device in _controller.GetPlaybackDevices())
             {
-                if (savedDevices.Any(d => d.Id == device.Id))
+                if (savedDevices.Any(d => d.Name == device.Name))
                 {
-                    var savedDevice = savedDevices.First(d => d.Id == device.Id);
+                    var savedDevice = savedDevices.First(d => d.Name == device.Name);
                     AddActiveAudioDevice(device, savedDevice);
 
                     continue;
